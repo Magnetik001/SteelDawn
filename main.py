@@ -8,7 +8,6 @@ class MainWindow(arcade.Window):
     def setup(self):
         self.show_view(menu.Menu())
 
-
 if __name__ == "__main__":
     window = MainWindow()
     window.setup()
