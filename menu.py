@@ -6,6 +6,7 @@ class Menu(arcade.View):
         super().__init__()
         self.setup()
 
+
     def setup(self):
         self.texture = arcade.load_texture("images/backgrounds/menu_bg1.png")
 
