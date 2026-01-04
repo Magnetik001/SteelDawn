@@ -6,9 +6,9 @@ import countrySelection
 class ScenarioSelection(arcade.View):
     def __init__(self):
         super().__init__()
+        arcade.set_background_color((248, 244, 235))
 
     def on_show_view(self):
-        arcade.set_background_color((248, 244, 235))
 
         self.manager = UIManager(self.window)
         self.manager.enable()

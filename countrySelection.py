@@ -1,14 +1,15 @@
 import arcade
 from arcade.gui import UIManager, UIFlatButton, UIAnchorLayout, UIBoxLayout
 
+import game
+
 
 class CountrySelection(arcade.View):
     def __init__(self):
         super().__init__()
+        arcade.set_background_color((248, 244, 235))
 
     def on_show_view(self):
-        arcade.set_background_color((248, 244, 235))  # #F8F4EB
-
         self.manager = UIManager(self.window)
         self.manager.enable()
 
@@ -57,7 +58,7 @@ class CountrySelection(arcade.View):
         self.box_layout.add(su_btn)
 
     def startGame(self, event):
-        print("Выбрана нация")
+        self.window.show_view(game.Game())
 
     def on_hide_view(self):
         self.manager.disable()

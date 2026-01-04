@@ -1,0 +1,364 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"b8a4a796-aaed-4306-93ad-ca4ad353165a\" name=\"Changes\" comment=\"0.0.2\">\r\n      <change afterPath=\"$PROJECT_DIR$/countrySelection.py\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/scenarioSelection.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/main.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/main.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/menu.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/menu.py\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"RESET_MODE\" value=\"MIXED\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Magnetik001&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Magnetik001/SteelDawn&quot;,\r\n    &quot;accountId&quot;: &quot;3ab10c6e-febf-4420-a3ad-188767daa359&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"37WkZmBUeklTCZNnHv33dFqrS10\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,\r\n    &quot;Python.main.executor&quot;: &quot;Run&quot;,\r\n    &quot;Python.menu.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/alex/PycharmProjects/SteelDawn&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\alex\\PycharmProjects\\SteelDawn\" />\r\n      <recent name=\"C:\\Users\\alex\\PycharmProjects\\SteelDawn\\images\\backgrounds\" />\r\n      <recent name=\"C:\\Users\\alex\\PycharmProjects\\SteelDawn\\images\\backgrouns\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-164cda30dcd9-0af03a5fa574-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26830.99\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"b8a4a796-aaed-4306-93ad-ca4ad353165a\" name=\"Changes\" comment=\"\" />\r\n      <created>1767026272977</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1767026272977</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"0.0.1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1767029108206</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1767029108206</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"0.0.2\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1767029422415</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1767029422415</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"0.0.1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1767036123920</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1767036123920</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"0.0.1 please\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1767036291007</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1767036291007</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"0.0.1 new please\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1767037329124</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1767037329124</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"0.0.1 new please\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1767037444061</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1767037444061</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"0.0.2\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1767037521878</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1767037521878</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"8\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"0.0.1\" />\r\n    <MESSAGE value=\"0.0.1 please\" />\r\n    <MESSAGE value=\"0.0.1 new please\" />\r\n    <MESSAGE value=\"0.0.2\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"0.0.2\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 280e6db555625ee1674b89a0a67cce19dbaa1759)
++++ b/.idea/workspace.xml	(date 1767558750131)
+@@ -5,11 +5,43 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="0.0.2">
+-      <change afterPath="$PROJECT_DIR$/countrySelection.py" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/scenarioSelection.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/альбасете.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/альмерия.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/бадахос.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/барселона.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/бильбао.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/бургос.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/валенсия.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/вальядолид.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/гибралтар.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/гуарда.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/дакс.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/кастельон.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/ла-корунья.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/лиссабон.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/мадрид.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/мурсия.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/овьедо.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/по.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/порту.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/саламанка.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/сарагоса.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/севилья.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/сигуэнса.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/таррагона.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/уэльва.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/уэска.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/фару.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/images/эвора.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/province.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/provinces.json" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/countrySelection.py" beforeDir="false" afterPath="$PROJECT_DIR$/countrySelection.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/scenarioSelection.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenarioSelection.py" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -50,24 +82,29 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+-    &quot;Python.menu.executor&quot;: &quot;Run&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/alex/PycharmProjects/SteelDawn&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "ModuleVcsDetector.initialDetectionPerformed": "true",
++    "Python.game.executor": "Run",
++    "Python.main.executor": "Run",
++    "Python.menu.executor": "Run",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
++    "RunOnceActivity.git.unshallow": "true",
++    "git-widget-placeholder": "main",
++    "ignore.virus.scanning.warn.message": "true",
++    "last_opened_file_path": "C:/Users/Егор/PycharmProjects/SteelDawn/images"
+   }
+-}</component>
++}]]></component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
++      <recent name="C:\Users\Егор\PycharmProjects\SteelDawn\images" />
+       <recent name="C:\Users\alex\PycharmProjects\SteelDawn" />
+       <recent name="C:\Users\alex\PycharmProjects\SteelDawn\images\backgrounds" />
+       <recent name="C:\Users\alex\PycharmProjects\SteelDawn\images\backgrouns" />
++    </key>
++    <key name="MoveFile.RECENT_KEYS">
++      <recent name="C:\Users\Егор\PycharmProjects\SteelDawn\images" />
+     </key>
+   </component>
+   <component name="SharedIndexes">
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import arcade\r\n\r\nimport menu\r\n\r\nclass MainWindow(arcade.Window):\r\n    def __init__(self):\r\n        super().__init__(800, 500, \"Steel Dawn\")\r\n\r\n    def setup(self):\r\n        self.show_view(menu.Menu())\r\n\r\nif __name__ == \"__main__\":\r\n    window = MainWindow()\r\n    window.setup()\r\n    arcade.run()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision 280e6db555625ee1674b89a0a67cce19dbaa1759)
++++ b/main.py	(date 1767553456148)
+@@ -4,7 +4,7 @@
+ 
+ class MainWindow(arcade.Window):
+     def __init__(self):
+-        super().__init__(800, 500, "Steel Dawn")
++        super().__init__(1920, 1080, "Steel Dawn")
+ 
+     def setup(self):
+         self.show_view(menu.Menu())
+Index: scenarioSelection.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import arcade\r\nfrom arcade.gui import UIManager, UIFlatButton, UIAnchorLayout, UIBoxLayout\r\nimport countrySelection\r\n\r\n\r\nclass ScenarioSelection(arcade.View):\r\n    def __init__(self):\r\n        super().__init__()\r\n\r\n    def on_show_view(self):\r\n        arcade.set_background_color((248, 244, 235))\r\n\r\n        self.manager = UIManager(self.window)\r\n        self.manager.enable()\r\n\r\n        self.anchor_layout = UIAnchorLayout()\r\n        self.box_layout = UIBoxLayout(vertical=True, space_between=30)\r\n\r\n        self.setup_widgets()\r\n\r\n        self.anchor_layout.add(self.box_layout, anchor_x=\"center\", anchor_y=\"top\", align_y=-160)\r\n        self.manager.add(self.anchor_layout)\r\n\r\n    def setup_widgets(self):\r\n        button_style = {\r\n            \"normal\": {\r\n                \"bg\": (248, 244, 235, 0),\r\n                \"font_color\": (40, 40, 40),\r\n                \"font_name\": (\"Courier New\", \"Consolas\", \"monospace\"),\r\n                \"font_size\": 20,\r\n                \"border\": 0,\r\n            },\r\n            \"hover\": {\r\n                \"font_color\": (20, 20, 20),\r\n                \"bg\": (235, 230, 220, 100),\r\n            },\r\n            \"press\": {\r\n                \"font_color\": (0, 0, 0),\r\n            },\r\n        }\r\n\r\n        btn_1939 = UIFlatButton(\r\n            text=\"> Вторжение в Польшу (сентябрь 1939)\",\r\n            width=680,\r\n            height=36,\r\n            style=button_style\r\n        )\r\n        btn_1939.on_click = self.startGame\r\n        self.box_layout.add(btn_1939)\r\n\r\n        btn_1941 = UIFlatButton(\r\n            text=\"> Операция «Барбаросса» (июнь 1941)\",\r\n            width=680,\r\n            height=36,\r\n            style=button_style\r\n        )\r\n        btn_1941.on_click = self.startGame\r\n        self.box_layout.add(btn_1941)\r\n\r\n    def startGame(self, event):\r\n        self.window.show_view(countrySelection.CountrySelection())\r\n\r\n    def on_hide_view(self):\r\n        self.manager.disable()\r\n\r\n    def on_draw(self):\r\n        self.clear()\r\n\r\n        arcade.draw_text(\r\n            \"ВОЕННО-ИСТОРИЧЕСКИЙ АРХИВ\",\r\n            self.width // 2,\r\n            self.height - 80,\r\n            (60, 60, 60),\r\n            font_size=32,\r\n            font_name=(\"Courier New\", \"Consolas\"),\r\n            anchor_x=\"center\",\r\n            bold=False\r\n        )\r\n\r\n        arcade.draw_text(\r\n            \"ИНДЕКС: SD-1939 / SD-1941     ДОПУСК: УТВЕРЖДЁН\",\r\n            self.width // 2,\r\n            self.height - 120,\r\n            (100, 100, 100),\r\n            font_size=18,\r\n            font_name=(\"Courier New\",),\r\n            anchor_x=\"center\"\r\n        )\r\n\r\n        arcade.draw_line(\r\n            start_x=self.width // 2 - 250,\r\n            start_y=self.height - 140,\r\n            end_x=self.width // 2 + 250,\r\n            end_y=self.height - 140,\r\n            color=(180, 180, 180),\r\n            line_width=1\r\n        )\r\n\r\n        arcade.draw_text(\r\n            \"«Steel Dawn» — альтернативная история. Все сценарии вымышлены.\",\r\n            self.width // 2,\r\n            50,\r\n            (140, 140, 140),\r\n            font_size=14,\r\n            font_name=(\"Courier New\",),\r\n            anchor_x=\"center\",\r\n            italic=True\r\n        )\r\n\r\n        self.manager.draw()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/scenarioSelection.py b/scenarioSelection.py
+--- a/scenarioSelection.py	(revision 280e6db555625ee1674b89a0a67cce19dbaa1759)
++++ b/scenarioSelection.py	(date 1767552623305)
+@@ -6,10 +6,10 @@
+ class ScenarioSelection(arcade.View):
+     def __init__(self):
+         super().__init__()
+-
+-    def on_show_view(self):
+         arcade.set_background_color((248, 244, 235))
+ 
++    def on_show_view(self):
++
+         self.manager = UIManager(self.window)
+         self.manager.enable()
+ 
+Index: provinces.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/provinces.json b/provinces.json
+new file mode 100644
+--- /dev/null	(date 1767558812549)
++++ b/provinces.json	(date 1767558812549)
+@@ -0,0 +1,6 @@
++{
++  "гибралтар": {"center_x": 100, "center_y": 200, "color": [255, 255, 0]},
++  "севилья": {"center_x": 76, "center_y": 222, "color": [255, 255, 0]}
++}
++
++
+Index: province.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/province.py b/province.py
+new file mode 100644
+--- /dev/null	(date 1767558408915)
++++ b/province.py	(date 1767558408915)
+@@ -0,0 +1,10 @@
++import arcade
++
++
++class Province(arcade.Sprite):
++    def __init__(self, filename: str, center_x: int, center_y: int, color: arcade.color.WHITE):
++        super().__init__(filename, scale=0.35)
++        self.center_x = center_x
++        self.center_y = center_y
++        self.color = color
++
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"Black\">\r\n    <option name=\"sdkName\" value=\"Python 3.13 (SteelDawn)\" />\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" project-jdk-name=\"Python 3.13 (SteelDawn)\" project-jdk-type=\"Python SDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 280e6db555625ee1674b89a0a67cce19dbaa1759)
++++ b/.idea/misc.xml	(date 1767552085206)
+@@ -3,5 +3,5 @@
+   <component name="Black">
+     <option name="sdkName" value="Python 3.13 (SteelDawn)" />
+   </component>
+-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 (SteelDawn)" project-jdk-type="Python SDK" />
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11" project-jdk-type="Python SDK" />
+ </project>
+\ No newline at end of file
+Index: menu.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import arcade\r\nfrom arcade.gui import UIManager, UIFlatButton, UIAnchorLayout, UIBoxLayout\r\nimport scenarioSelection\r\n\r\n\r\nclass Menu(arcade.View):\r\n    def __init__(self):\r\n        super().__init__()\r\n\r\n    def on_show_view(self):\r\n        arcade.set_background_color((248, 244, 235))\r\n\r\n        self.manager = UIManager(self.window)\r\n        self.manager.enable()\r\n\r\n        self.anchor_layout = UIAnchorLayout()\r\n        self.box_layout = UIBoxLayout(vertical=True, space_between=30)\r\n\r\n        self.setup_widgets()\r\n\r\n        self.anchor_layout.add(self.box_layout, anchor_x=\"center\", anchor_y=\"top\", align_y=-180)\r\n        self.manager.add(self.anchor_layout)\r\n\r\n    def setup_widgets(self):\r\n        button_style = {\r\n            \"normal\": {\r\n                \"bg\": (248, 244, 235, 0),\r\n                \"font_color\": (40, 40, 40),\r\n                \"font_name\": (\"Courier New\", \"Consolas\", \"monospace\"),\r\n                \"font_size\": 24,\r\n                \"border\": 0,\r\n            },\r\n            \"hover\": {\r\n                \"font_color\": (20, 20, 20),\r\n                \"bg\": (235, 230, 220, 100),\r\n            },\r\n            \"press\": {\r\n                \"font_color\": (0, 0, 0),\r\n            },\r\n        }\r\n\r\n        start_btn = UIFlatButton(\r\n            text=\"> ПРИСТУПИТЬ К ОПЕРАЦИИ\",\r\n            width=520,\r\n            height=36,\r\n            style=button_style\r\n        )\r\n        start_btn.on_click = self.startGame\r\n        self.box_layout.add(start_btn)\r\n\r\n    def startGame(self, event):\r\n        self.window.show_view(scenarioSelection.ScenarioSelection())\r\n\r\n    def on_hide_view(self):\r\n        self.manager.disable()\r\n\r\n    def on_draw(self):\r\n        self.clear()\r\n\r\n        arcade.draw_text(\r\n            \"STEEL DAWN\",\r\n            self.width // 2,\r\n            self.height - 120,\r\n            (50, 50, 50),\r\n            font_size=56,\r\n            font_name=(\"Courier New\", \"Consolas\"),\r\n            anchor_x=\"center\",\r\n            bold=False\r\n        )\r\n\r\n        arcade.draw_text(\r\n            \"ВОЕННО-СТРАТЕГИЧЕСКИЙ СИМУЛЯТОР АЛЬТЕРНАТИВНОЙ ИСТОРИИ\",\r\n            self.width // 2,\r\n            self.height - 170,\r\n            (100, 100, 100),\r\n            font_size=18,\r\n            font_name=(\"Courier New\",),\r\n            anchor_x=\"center\"\r\n        )\r\n\r\n\r\n        arcade.draw_text(\r\n            \"ДОПУСК: ГЛАВНОКОМАНДУЮЩИЙ     АРХИВ: ОТДЕЛ ИСТОРИЧЕСКИХ ОПЕРАЦИЙ\",\r\n            self.width // 2,\r\n            80,\r\n            (130, 130, 130),\r\n            font_size=14,\r\n            font_name=(\"Courier New\",),\r\n            anchor_x=\"center\"\r\n        )\r\n\r\n        arcade.draw_text(\r\n            \"ДАННЫЙ СИМУЛЯТОР ЯВЛЯЕТСЯ ИСТОРИЧЕСКИМ ЭКСПЕРИМЕНТОМ. ВСЕ СОБЫТИЯ УСЛОВНЫ.\",\r\n            self.width // 2,\r\n            50,\r\n            (150, 150, 150),\r\n            font_size=12,\r\n            font_name=(\"Courier New\",),\r\n            anchor_x=\"center\",\r\n            italic=True\r\n        )\r\n\r\n        self.manager.draw()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/menu.py b/menu.py
+--- a/menu.py	(revision 280e6db555625ee1674b89a0a67cce19dbaa1759)
++++ b/menu.py	(date 1767552623291)
+@@ -6,10 +6,10 @@
+ class Menu(arcade.View):
+     def __init__(self):
+         super().__init__()
+-
+-    def on_show_view(self):
+         arcade.set_background_color((248, 244, 235))
+ 
++    def on_show_view(self):
++
+         self.manager = UIManager(self.window)
+         self.manager.enable()
+ 
+Index: game.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/game.py b/game.py
+new file mode 100644
+--- /dev/null	(date 1767558378491)
++++ b/game.py	(date 1767558378491)
+@@ -0,0 +1,99 @@
++import arcade
++from arcade.gui import UIManager, UIFlatButton, UIAnchorLayout, UIBoxLayout
++
++import json
++
++import province
++
++
++class Game(arcade.View):
++    def __init__(self):
++        super().__init__()
++        arcade.set_background_color(arcade.color.LIGHT_BLUE)
++
++        self.world_camera = arcade.camera.Camera2D()
++        self.gui_camera = arcade.camera.Camera2D()
++
++        self.all_provinces = arcade.SpriteList()
++
++        self.pan_speed = 5.0
++        self.keys = {
++            arcade.key.W: False,
++            arcade.key.S: False,
++            arcade.key.A: False,
++            arcade.key.D: False,
++        }
++
++        self.manager = None
++
++    def on_show_view(self):
++        with open("provinces.json", mode="r", encoding="UTF-8") as file:
++            data = json.load(file)
++            for i in data:
++                prov = province.Province(f"images/{i}.png", data[i]["center_x"], data[i]["center_y"],
++                                         tuple(data[i]["color"]))
++                self.all_provinces.append(prov)
++
++        self.world_camera.position = (self.window.width / 2, self.window.height / 2)
++
++        self.manager = UIManager(self.window)
++        self.manager.enable()
++
++        self.anchor_layout = UIAnchorLayout()
++        self.box_layout = UIBoxLayout(vertical=True, space_between=28)
++
++        self.setup_widgets()
++
++        self.anchor_layout.add(self.box_layout, anchor_x="center", anchor_y="top", align_y=-170)
++        self.manager.add(self.anchor_layout)
++
++    def setup_widgets(self):
++        ...
++
++    def on_update(self, delta_time: float):
++        if self.keys[arcade.key.W]:
++            self.world_camera.position = (
++                self.world_camera.position[0],
++                self.world_camera.position[1] + self.pan_speed
++            )
++        if self.keys[arcade.key.S]:
++            self.world_camera.position = (
++                self.world_camera.position[0],
++                self.world_camera.position[1] - self.pan_speed
++            )
++        if self.keys[arcade.key.A]:
++            self.world_camera.position = (
++                self.world_camera.position[0] - self.pan_speed,
++                self.world_camera.position[1]
++            )
++        if self.keys[arcade.key.D]:
++            self.world_camera.position = (
++                self.world_camera.position[0] + self.pan_speed,
++                self.world_camera.position[1]
++            )
++
++    def on_key_press(self, symbol: int, modifiers: int):
++        if symbol in self.keys:
++            self.keys[symbol] = True
++
++    def on_key_release(self, symbol: int, modifiers: int):
++        if symbol in self.keys:
++            self.keys[symbol] = False
++
++    def on_mouse_scroll(self, x: int, y: int, scroll_x: int, scroll_y: int):
++        zoom_factor = 1.1 if scroll_y > 0 else 1 / 1.1
++        self.world_camera.zoom *= zoom_factor
++
++
++    def on_hide_view(self):
++        self.manager.disable()
++
++    def on_draw(self):
++        self.clear()
++
++        self.world_camera.use()
++        self.all_provinces.draw()
++
++        if self.manager:
++            self.gui_camera.use()
++            self.manager.draw()
+\ No newline at end of file
+Index: countrySelection.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import arcade\r\nfrom arcade.gui import UIManager, UIFlatButton, UIAnchorLayout, UIBoxLayout\r\n\r\n\r\nclass CountrySelection(arcade.View):\r\n    def __init__(self):\r\n        super().__init__()\r\n\r\n    def on_show_view(self):\r\n        arcade.set_background_color((248, 244, 235))  # #F8F4EB\r\n\r\n        self.manager = UIManager(self.window)\r\n        self.manager.enable()\r\n\r\n        self.anchor_layout = UIAnchorLayout()\r\n        self.box_layout = UIBoxLayout(vertical=True, space_between=28)\r\n\r\n        self.setup_widgets()\r\n\r\n        self.anchor_layout.add(self.box_layout, anchor_x=\"center\", anchor_y=\"top\", align_y=-170)\r\n        self.manager.add(self.anchor_layout)\r\n\r\n    def setup_widgets(self):\r\n        button_style = {\r\n            \"normal\": {\r\n                \"bg\": (248, 244, 235, 0),\r\n                \"font_color\": (40, 40, 40),\r\n                \"font_name\": (\"Courier New\", \"Consolas\", \"monospace\"),\r\n                \"font_size\": 24,\r\n                \"border\": 0,\r\n            },\r\n            \"hover\": {\r\n                \"font_color\": (20, 20, 20),\r\n                \"bg\": (235, 230, 220, 100),\r\n            },\r\n            \"press\": {\r\n                \"font_color\": (0, 0, 0),\r\n            },\r\n        }\r\n\r\n        de_btn = UIFlatButton(\r\n            text=\"> DEU: Третий рейх — Ось\",\r\n            width=600,\r\n            height=36,\r\n            style=button_style\r\n        )\r\n        de_btn.on_click = self.startGame\r\n        self.box_layout.add(de_btn)\r\n\r\n        su_btn = UIFlatButton(\r\n            text=\"> URS: Советский Союз — Союзники\",\r\n            width=600,\r\n            height=36,\r\n            style=button_style\r\n        )\r\n        su_btn.on_click = self.startGame\r\n        self.box_layout.add(su_btn)\r\n\r\n    def startGame(self, event):\r\n        print(\"Выбрана нация\")\r\n\r\n    def on_hide_view(self):\r\n        self.manager.disable()\r\n\r\n    def on_draw(self):\r\n        self.clear()\r\n\r\n        arcade.draw_text(\r\n            \"ОПЕРАТИВНЫЙ СПИСОК НАЦИЙ\",\r\n            self.width // 2,\r\n            self.height - 110,\r\n            (50, 50, 50),\r\n            font_size=30,\r\n            font_name=(\"Courier New\",),\r\n            anchor_x=\"center\"\r\n        )\r\n\r\n        arcade.draw_text(\r\n            \"Выберите сторону для ведения операции\",\r\n            self.width // 2,\r\n            self.height - 150,\r\n            (100, 100, 100),\r\n            font_size=18,\r\n            font_name=(\"Courier New\",),\r\n            anchor_x=\"center\"\r\n        )\r\n\r\n        arcade.draw_line(\r\n            start_x=self.width // 2 - 220,\r\n            start_y=self.height - 170,\r\n            end_x=self.width // 2 + 220,\r\n            end_y=self.height - 170,\r\n            color=(180, 180, 180),\r\n            line_width=1\r\n        )\r\n\r\n        arcade.draw_text(\r\n            \"КОДЫ НАЦИЙ СООТВЕТСТВУЮТ СТАНДАРТУ MIL-STD-1008\",\r\n            self.width // 2,\r\n            60,\r\n            (140, 140, 140),\r\n            font_size=13,\r\n            font_name=(\"Courier New\",),\r\n            anchor_x=\"center\",\r\n            italic=True\r\n        )\r\n\r\n        self.manager.draw()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/countrySelection.py b/countrySelection.py
+--- a/countrySelection.py	(revision 280e6db555625ee1674b89a0a67cce19dbaa1759)
++++ b/countrySelection.py	(date 1767552830070)
+@@ -1,14 +1,15 @@
+ import arcade
+ from arcade.gui import UIManager, UIFlatButton, UIAnchorLayout, UIBoxLayout
+ 
++import game
++
+ 
+ class CountrySelection(arcade.View):
+     def __init__(self):
+         super().__init__()
++        arcade.set_background_color((248, 244, 235))
+ 
+     def on_show_view(self):
+-        arcade.set_background_color((248, 244, 235))  # #F8F4EB
+-
+         self.manager = UIManager(self.window)
+         self.manager.enable()
+ 
+@@ -57,7 +58,7 @@
+         self.box_layout.add(su_btn)
+ 
+     def startGame(self, event):
+-        print("Выбрана нация")
++        self.window.show_view(game.Game())
+ 
+     def on_hide_view(self):
+         self.manager.disable()
