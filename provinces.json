@@ -1,4 +1,6 @@
 {
-  "гибралтар": {"center_x":  100, "center_y": 200, "color": [255, 255, 0]},
-  "севилья": {"center_x":  76, "center_y": 222, "color": [255, 255, 0]}
+  "гибралтар": {"center_x":  150, "center_y": 200, "color": [255, 255, 0], "resource":  "-"},
+  "севилья": {"center_x":  126, "center_y": 222, "color": [255, 255, 0], "resource":  "Пшеница"},
+  "уэльва": {"center_x":  120, "center_y": 256, "color": [255, 255, 0], "resource":  "Железо"},
+  "фару": {"center_x":  36, "center_y": 270, "color": [0, 191, 255], "resource":  "Дерево"}
 }
