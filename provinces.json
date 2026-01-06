@@ -1,6 +1,6 @@
 {
-  "гибралтар": {"center_x":  150, "center_y": 200, "color": [255, 255, 0], "resource":  "-"},
-  "севилья": {"center_x":  126, "center_y": 222, "color": [255, 255, 0], "resource":  "Пшеница"},
-  "уэльва": {"center_x":  120, "center_y": 256, "color": [255, 255, 0], "resource":  "Железо"},
-  "фару": {"center_x":  36, "center_y": 270, "color": [0, 191, 255], "resource":  "Дерево"}
+  "гибралтар": {"center_x":  379, "center_y": 3861, "color": [255, 255, 0], "resource":  "-"},
+  "севилья": {"center_x":  329, "center_y": 3805, "color": [255, 255, 0], "resource":  "Пшеница"},
+  "уэльва": {"center_x":  267, "center_y": 3658, "color": [255, 255, 0], "resource":  "Железо"},
+  "фару": {"center_x":  74, "center_y": 3653, "color": [0, 191, 255], "resource":  "Дерево"}
 }
