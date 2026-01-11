@@ -167,11 +167,7 @@
   "фоджа": {"center_x": 2756.5, "center_y": 1279.5, "color": [130, 145, 70], "resource":  "-"},
   "неаполь": {"center_x": 2710.5, "center_y": 1181.5, "color": [130, 145, 70], "resource":  "-"},
   "таранто": {"center_x": 2967.5, "center_y": 1143.0, "color": [130, 145, 70], "resource":  "-"},
-  "реджио-ди-калабрия": {"center_x": 2864.0, "center_y": 973.0, "color": [130, 145, 70], "resource":  "-"},
-  "палермо": {"center_x": 2601.5, "center_y": 774.5, "color": [130, 145, 70], "resource":  "-"},
-  "катанья": {"center_x": 2650.0, "center_y": 711.0, "color": [130, 145, 70], "resource":  "-"},
-  "сардиния": {"center_x": 2063.0, "center_y": 1205.5, "color": [130, 145, 70], "resource":  "-"},
-  "корсика": {"center_x": 2083.0, "center_y": 1418.0, "color": [0, 191, 255], "resource":  "-"}
+  "реджио-ди-калабрия": {"center_x": 2864.0, "center_y": 973.0, "color": [130, 145, 70], "resource":  "-"}
 
 
 }
