@@ -1,5 +1,5 @@
 import arcade
-from arcade.gui import UIManager, UILabel, UIBoxLayout
+from arcade.gui import UIManager, UILabel, UIBoxLayout, UIAnchorLayout, UIFlatButton
 import json
 import province
 
@@ -19,6 +19,65 @@ class Game(arcade.View):
         self.manager = None
         self.info_box = None
         self.info_label = None
+
+        self.prov_manager = UIManager()
+        self.prov_manager.enable()
+
+        self.prov_anchor_layout = UIAnchorLayout()
+        self.prov_box_layout = UIBoxLayout(vertical=True, space_between=10)
+        self.prov_anchor_layout.add(self.prov_box_layout, anchor_x="center", anchor_y="top", align_y=-550, align_x=-600)
+        self.prov_manager.add(self.prov_anchor_layout)
+
+    def setup_prov_widgets(self):
+        button_style = {
+            "normal": {
+                "bg": (40, 40, 40, 200),
+                "font_color": (240, 240, 240),
+                "font_name": ("Courier New", "Consolas", "monospace"),
+                "font_size": 24,
+                "border": 0,
+            },
+            "hover": {
+                "font_color": (20, 20, 20),
+                "bg": (235, 230, 220, 100),
+            },
+            "press": {
+                "font_color": (0, 0, 0),
+            },
+        }
+        self.prov_name_text = UILabel(
+            text=self.prov_name.upper(),
+            font_size=36,
+            text_color=(40, 40, 40),
+            font_name=("Courier New", "Consolas", "monospace")
+        )
+        self.prov_box_layout.add(self.prov_name_text)
+    
+        self.buy_army_btn = UIFlatButton(
+            text="Создать армию в этой провинции",
+            width=600,
+            height=36,
+            style=button_style
+        )
+        self.buy_army_btn.on_click = self.buy_army
+        self.prov_box_layout.add(self.buy_army_btn)
+    
+        self.close_prov_btn = UIFlatButton(
+            text="Закрыть",
+            width=600,
+            height=36,
+            style=button_style
+        )
+        self.close_prov_btn.on_click = self.close_prov_widgets
+        self.prov_box_layout.add(self.close_prov_btn)
+
+    def buy_army(self, event):
+        pass
+
+    def close_prov_widgets(self, event):
+        self.prov_box_layout.remove(self.close_prov_btn)
+        self.prov_box_layout.remove(self.buy_army_btn)
+        self.prov_box_layout.remove(self.prov_name_text)
 
     def on_show_view(self):
         arcade.set_background_color(arcade.color.LIGHT_BLUE)
@@ -79,7 +138,9 @@ class Game(arcade.View):
                     f"Resources: {prov.resource}"
                 )
                 self.info_label.text = text
+                self.prov_name = prov.name
                 self.info_box.visible = True
+                self.setup_prov_widgets()
                 return
 
         self.info_box.visible = False
@@ -92,6 +153,7 @@ class Game(arcade.View):
 
         self.gui_camera.use()
         self.manager.draw()
+        self.prov_manager.draw()
 
     def on_key_press(self, symbol, modifiers):
         if symbol in self.keys:
