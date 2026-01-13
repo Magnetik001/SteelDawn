@@ -2,6 +2,7 @@ import arcade
 
 import menu
 
+
 class MainWindow(arcade.Window):
     def __init__(self):
         super().__init__(1920, 1080, "Steel Dawn")

@@ -1,26 +1,30 @@
 import arcade
-from arcade.gui import UIManager, UILabel, UIBoxLayout
+from arcade.gui import UIManager, UILabel, UIBoxLayout, UIMessageBox, UIAnchorLayout
 import json
 import province
 
 
 class Game(arcade.View):
-    def __init__(self):
+    def __init__(self, year: int, country: str):
         super().__init__()
+
+        self.year = year
+        self.country = country
+
+        print(year,country)
 
         self.world_camera = arcade.camera.Camera2D()
         self.gui_camera = arcade.camera.Camera2D()
 
         self.all_provinces = arcade.SpriteList()
 
-        self.pan_speed = 10.0
+        self.pan_speed = 20.0
         self.keys = {key: False for key in (arcade.key.W, arcade.key.S, arcade.key.A, arcade.key.D)}
 
         self.manager = None
         self.info_box = None
         self.info_label = None
 
-        
         self.prov_manager = UIManager()
         self.prov_manager.enable()
 
@@ -38,7 +42,7 @@ class Game(arcade.View):
         self.message_box.on_action = self.on_message_button
         self.prov_manager.add(self.message_box)
         self.message_box.with_padding(top=20, left=10, right=10, bottom=10)
-        
+
     def on_message_button(self, button_text):
         if button_text == "Закрыть":
             self.close_message()
@@ -65,11 +69,13 @@ class Game(arcade.View):
                     name,
                     data[name]["resource"]
                 )
-                prov.set_hit_box(prov.texture.hit_box_points)
                 self.all_provinces.append(prov)
 
         self.manager = UIManager()
         self.manager.enable()
+
+        if self.country == "GER":
+            self.world_camera.position = (2544, 2670)
 
         self.info_label = UILabel(
             text="",
@@ -79,10 +85,9 @@ class Game(arcade.View):
             width=250
         )
 
+
         self.info_box = UIBoxLayout(vertical=True)
         self.info_box.add(self.info_label)
-
-        self.manager.add(self.info_box.with_space_around(left=10, bottom=10))
 
         self.info_box.visible = False
 
@@ -113,6 +118,9 @@ class Game(arcade.View):
                 self.prov_name = prov.name
                 self.show_message()
                 self.info_box.visible = True
+
+                self.world_camera.position = (prov.center_x, prov.center_y)
+
                 return
 
         self.info_box.visible = False

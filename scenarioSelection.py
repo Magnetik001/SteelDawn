@@ -40,25 +40,28 @@ class ScenarioSelection(arcade.View):
         }
 
         btn_1939 = UIFlatButton(
-            text="> Вторжение в Польшу (сентябрь 1939)",
+            text="> сентябрь 1936",
             width=680,
             height=36,
             style=button_style
         )
-        btn_1939.on_click = self.startGame
+        btn_1939.on_click = self.startGame_1936
         self.box_layout.add(btn_1939)
 
         btn_1941 = UIFlatButton(
-            text="> Операция «Барбаросса» (июнь 1941)",
+            text="> июнь 1941",
             width=680,
             height=36,
             style=button_style
         )
-        btn_1941.on_click = self.startGame
+        btn_1941.on_click = self.startGame_1941
         self.box_layout.add(btn_1941)
 
-    def startGame(self, event):
-        self.window.show_view(countrySelection.CountrySelection())
+    def startGame_1936(self, event):
+        self.window.show_view(countrySelection.CountrySelection(1936))
+
+    def startGame_1941(self, event):
+        self.window.show_view(countrySelection.CountrySelection(1941))
 
     def on_hide_view(self):
         self.manager.disable()

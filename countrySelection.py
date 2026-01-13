@@ -5,8 +5,9 @@ import game
 
 
 class CountrySelection(arcade.View):
-    def __init__(self):
+    def __init__(self, year: int):
         super().__init__()
+        self.year = year
         arcade.set_background_color((248, 244, 235))
 
     def on_show_view(self):
@@ -40,25 +41,28 @@ class CountrySelection(arcade.View):
         }
 
         de_btn = UIFlatButton(
-            text="> DEU: Третий рейх — Ось",
+            text="> DEU: Третий рейх",
             width=600,
             height=36,
             style=button_style
         )
-        de_btn.on_click = self.startGame
+        de_btn.on_click = self.startGame_GER
         self.box_layout.add(de_btn)
 
         su_btn = UIFlatButton(
-            text="> URS: Советский Союз — Союзники",
+            text="> URS: Советский Союз",
             width=600,
             height=36,
             style=button_style
         )
-        su_btn.on_click = self.startGame
+        su_btn.on_click = self.startGame_USS
         self.box_layout.add(su_btn)
 
-    def startGame(self, event):
-        self.window.show_view(game.Game())
+    def startGame_GER(self, event):
+        self.window.show_view(game.Game(self.year, "GER"))
+
+    def startGame_USS(self, event):
+        self.window.show_view(game.Game(self.year, "USS"))
 
     def on_hide_view(self):
         self.manager.disable()
