@@ -11,7 +11,7 @@ class Game(arcade.View):
         self.year = year
         self.country = country
 
-        print(year,country)
+        print(year, country)
 
         self.world_camera = arcade.camera.Camera2D()
         self.gui_camera = arcade.camera.Camera2D()
@@ -56,7 +56,8 @@ class Game(arcade.View):
         self.message_box.clear()
 
     def on_show_view(self):
-        arcade.set_background_color(arcade.color.LIGHT_BLUE)
+        self.texture = arcade.load_texture("/home/davidenkomi-1/PycharmProjects/SteelDawn/water-background_87394-3060 (1).jpg")
+
 
         with open("provinces.json", "r", encoding="utf-8") as file:
             data = json.load(file)
@@ -127,6 +128,7 @@ class Game(arcade.View):
 
     def on_draw(self):
         self.clear()
+        arcade.draw_texture_rect(self.texture, arcade.rect.XYWH(1960 // 2, 1080 // 2, 1960, 1080))
 
         self.world_camera.use()
         self.all_provinces.draw()
@@ -134,6 +136,7 @@ class Game(arcade.View):
         self.gui_camera.use()
         self.manager.draw()
         self.prov_manager.draw()
+
 
     def on_key_press(self, symbol, modifiers):
         if symbol in self.keys:
