@@ -20,6 +20,37 @@ class Game(arcade.View):
         self.info_box = None
         self.info_label = None
 
+        
+        self.prov_manager = UIManager()
+        self.prov_manager.enable()
+
+        self.prov_anchor_layout = UIAnchorLayout()
+        self.prov_box_layout = UIBoxLayout(vertical=True, space_between=10)
+        self.prov_anchor_layout.add(self.prov_box_layout, anchor_x="center", anchor_y="top", align_y=-550, align_x=-600)
+        self.prov_manager.add(self.prov_anchor_layout)
+
+    def show_message(self):
+        self.message_box = UIMessageBox(
+            width=300, height=200,
+            message_text=self.prov_name.upper(),
+            buttons=("Купить армию", "Закрыть")
+        )
+        self.message_box.on_action = self.on_message_button
+        self.prov_manager.add(self.message_box)
+        self.message_box.with_padding(top=20, left=10, right=10, bottom=10)
+        
+    def on_message_button(self, button_text):
+        if button_text == "Закрыть":
+            self.close_message()
+        else:
+            self.buy_army()
+
+    def buy_army(self):
+        pass
+
+    def close_message(self):
+        self.message_box.clear()
+
     def on_show_view(self):
         arcade.set_background_color(arcade.color.LIGHT_BLUE)
 
@@ -79,6 +110,8 @@ class Game(arcade.View):
                     f"Resources: {prov.resource}"
                 )
                 self.info_label.text = text
+                self.prov_name = prov.name
+                self.show_message()
                 self.info_box.visible = True
                 return
 
@@ -92,6 +125,7 @@ class Game(arcade.View):
 
         self.gui_camera.use()
         self.manager.draw()
+        self.prov_manager.draw()
 
     def on_key_press(self, symbol, modifiers):
         if symbol in self.keys:
