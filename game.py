@@ -7,6 +7,8 @@ import province
 class Game(arcade.View):
     def __init__(self, year: int, country: str):
         super().__init__()
+        
+        self.message_opened = False
 
         self.year = year
         self.country = country
@@ -34,6 +36,8 @@ class Game(arcade.View):
         self.prov_manager.add(self.prov_anchor_layout)
 
     def show_message(self):
+        self.message_opened = True
+        
         self.message_box = UIMessageBox(
             width=300, height=200,
             message_text=self.prov_name.upper(),
@@ -50,14 +54,16 @@ class Game(arcade.View):
             self.buy_army()
 
     def buy_army(self):
-        pass
+        self.message_opened = False
+        self.close_message()
 
     def close_message(self):
+        self.message_opened = False
         self.message_box.clear()
 
     def on_show_view(self):
-        self.texture = arcade.load_texture("/home/davidenkomi-1/PycharmProjects/SteelDawn/water-background_87394-3060 (1).jpg")
-
+        #self.texture = arcade.load_texture("/home/davidenkomi-1/PycharmProjects/SteelDawn/water-background_87394-3060 (1).jpg")
+        pass
 
         with open("provinces.json", "r", encoding="utf-8") as file:
             data = json.load(file)
@@ -107,28 +113,29 @@ class Game(arcade.View):
 
     def on_mouse_press(self, x, y, button, modifiers):
         world_x, world_y, _ = self.world_camera.unproject((x, y))
-
-        for prov in self.all_provinces:
-            if prov.collides_with_point((world_x, world_y)):
-                text = (
-                    f"Province: {prov.name}\n"
-                    f"Color: {prov.color}\n"
-                    f"Resources: {prov.resource}"
-                )
-                self.info_label.text = text
-                self.prov_name = prov.name
-                self.show_message()
-                self.info_box.visible = True
-
-                self.world_camera.position = (prov.center_x, prov.center_y)
-
-                return
+        
+        if self.message_opened == False:
+            for prov in self.all_provinces:
+                if prov.collides_with_point((world_x, world_y)):
+                    text = (
+                        f"Province: {prov.name}\n"
+                        f"Color: {prov.color}\n"
+                        f"Resources: {prov.resource}"
+                    )
+                    self.info_label.text = text
+                    self.prov_name = prov.name
+                    self.show_message()
+                    self.info_box.visible = True
+    
+                    self.world_camera.position = (prov.center_x, prov.center_y)
+    
+                    return
 
         self.info_box.visible = False
 
     def on_draw(self):
         self.clear()
-        arcade.draw_texture_rect(self.texture, arcade.rect.XYWH(1960 // 2, 1080 // 2, 1960, 1080))
+        # arcade.draw_texture_rect(self.texture, arcade.rect.XYWH(1960 // 2, 1080 // 2, 1960, 1080))
 
         self.world_camera.use()
         self.all_provinces.draw()
