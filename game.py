@@ -14,6 +14,8 @@ class Game(arcade.View):
         self.gui_camera = arcade.camera.Camera2D()
 
         self.all_provinces = arcade.SpriteList()
+        self.background = arcade.SpriteList()
+        self.background.append(arcade.Sprite("images\фон.png", center_x=2608, center_y=2432))
         self.player_sprite = None
 
         self.pan_speed = 5.0
@@ -27,7 +29,7 @@ class Game(arcade.View):
         self.manager = None
 
     def on_show_view(self):
-        arcade.set_background_color(arcade.color.LIGHT_BLUE)
+        arcade.set_background_color((42, 44, 44))
 
         with open("provinces.json", mode="r", encoding="utf-8") as file:
             data = json.load(file)
@@ -83,6 +85,7 @@ class Game(arcade.View):
 
         self.world_camera.use()
         self.all_provinces.draw()
+        self.background.draw()
 
         if self.manager:
             self.gui_camera.use()
