@@ -7,13 +7,12 @@ import province
 class Game(arcade.View):
     def __init__(self, year: int, country: str):
         super().__init__()
-        
+
+        self.army_positions = []
         self.message_opened = False
 
         self.year = year
         self.country = country
-
-        print(year, country)
 
         self.world_camera = arcade.camera.Camera2D()
         self.gui_camera = arcade.camera.Camera2D()
@@ -40,7 +39,7 @@ class Game(arcade.View):
         
         self.message_box = UIMessageBox(
             width=300, height=200,
-            message_text=self.prov_name.upper(),
+            message_text=f"{self.prov_name.upper()}\n{self.prov_resource}",
             buttons=("Купить армию", "Закрыть")
         )
         self.message_box.on_action = self.on_message_button
@@ -48,13 +47,15 @@ class Game(arcade.View):
         self.message_box.with_padding(top=20, left=10, right=10, bottom=10)
 
     def on_message_button(self, button_text):
-        if button_text == "Закрыть":
+        if button_text.action == "Закрыть":
             self.close_message()
-        else:
+        elif button_text.action == "Купить армию":
             self.buy_army()
 
     def buy_army(self):
         self.message_opened = False
+        if self.prov_center not in self.army_positions:
+            self.army_positions.append(self.prov_center)
         self.close_message()
 
     def close_message(self):
@@ -124,6 +125,8 @@ class Game(arcade.View):
                     )
                     self.info_label.text = text
                     self.prov_name = prov.name
+                    self.prov_resource = prov.resource
+                    self.prov_center = (prov.center_x, prov.center_y)
                     self.show_message()
                     self.info_box.visible = True
     
@@ -139,11 +142,12 @@ class Game(arcade.View):
 
         self.world_camera.use()
         self.all_provinces.draw()
+        for i in self.army_positions:
+            arcade.draw_circle_filled(i[0], i[1], 25, arcade.color.BLUE)
 
         self.gui_camera.use()
         self.manager.draw()
         self.prov_manager.draw()
-
 
     def on_key_press(self, symbol, modifiers):
         if symbol in self.keys:
