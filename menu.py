@@ -36,7 +36,7 @@ class Menu(arcade.View):
         self.anchor_layout = UIAnchorLayout()
         self.box_layout = UIBoxLayout(vertical=True, space_between=30)
 
-        # Стиль кнопок - ВАШ ТОЧНЫЙ СТИЛЬ
+        # Стиль кнопок
         button_style = {
             "normal": {
                 "bg": (248, 244, 235, 0),
@@ -91,7 +91,7 @@ class Menu(arcade.View):
     def on_draw(self):
         self.clear()
 
-        # ВАШ ТОЧНЫЙ ТЕКСТ С ЗАГОЛОВКАМИ
+        # Текст с заголовками
         arcade.draw_text(
             "STEEL DAWN",
             self.window.width // 2,
@@ -138,7 +138,7 @@ class Menu(arcade.View):
         self.manager.draw()
 
 
-# ВЫБОР СТРАНЫ
+# Выбор страны
 class CountrySelectionView(arcade.View):
     """Второй экран: выбор страны для выбранного года"""
 
@@ -167,7 +167,7 @@ class CountrySelectionView(arcade.View):
         }
 
 
-        # Стиль кнопок стран (ВАШ СТИЛЬ)
+        # Стиль кнопок стран
         country_button_style = {
             "normal": {
                 "bg": (248, 244, 235, 0),
@@ -185,7 +185,7 @@ class CountrySelectionView(arcade.View):
             },
         }
 
-        # Создаем кнопки для всех стран
+        # Кнопки всех стран
         for country in self.countries:
             btn = UIFlatButton(
                 text=f"> {country.upper()}",
@@ -235,7 +235,7 @@ class CountrySelectionView(arcade.View):
     def on_draw(self):
         self.clear()
 
-        # Фоновый текст (как в оригинале)
+        # Фоновый текст
         arcade.draw_text(
             f"{self.year}",
             self.window.width // 2,
