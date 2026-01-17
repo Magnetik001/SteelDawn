@@ -18,6 +18,8 @@ class Game(arcade.View):
         self.gui_camera = arcade.camera.Camera2D()
 
         self.all_provinces = arcade.SpriteList()
+        self.background = arcade.SpriteList()
+        self.background.append(arcade.Sprite("images\фон.png", center_x=2608, center_y=2432))
 
         self.pan_speed = 20.0
         self.keys = {key: False for key in (arcade.key.W, arcade.key.S, arcade.key.A, arcade.key.D)}
@@ -63,8 +65,7 @@ class Game(arcade.View):
         self.message_box.clear()
 
     def on_show_view(self):
-        # self.texture = arcade.load_texture("/home/davidenkomi-1/PycharmProjects/SteelDawn/water-background_87394-3060 (1).jpg")
-        pass
+        arcade.set_background_color((42, 44, 44))
 
         with open("provinces.json", "r", encoding="utf-8") as file:
             data = json.load(file)
@@ -137,10 +138,10 @@ class Game(arcade.View):
 
     def on_draw(self):
         self.clear()
-        # arcade.draw_texture_rect(self.texture, arcade.rect.XYWH(1960 // 2, 1080 // 2, 1960, 1080))
 
         self.world_camera.use()
         self.all_provinces.draw()
+        self.background.draw()
         for i in self.army_positions:
             arcade.draw_circle_filled(i[0], i[1], 25, arcade.color.BLUE)
 
