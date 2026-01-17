@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="радикальные изменения от Макса">
+    <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="0.0.2">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/фон.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/фон.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +34,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Magnetik001/SteelDawn.git&quot;,
-    &quot;accountId&quot;: &quot;e01e531f-539d-436e-978c-30a88d1f52b3&quot;
+    &quot;url&quot;: &quot;https://github.com/Magnetik001/SteelDawn&quot;,
+    &quot;accountId&quot;: &quot;3ab10c6e-febf-4420-a3ad-188767daa359&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -47,22 +49,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.game.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.menu.executor&quot;: &quot;Run&quot;,
-    &quot;Python.province.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/alex/PycharmProjects/SteelDawn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.game.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.menu.executor": "Run",
+    "Python.province.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/alex/PycharmProjects/SteelDawn"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\alex\PycharmProjects\SteelDawn" />
@@ -173,71 +174,7 @@
       <option name="project" value="LOCAL" />
       <updated>1767876246352</updated>
     </task>
-    <task id="LOCAL-00012" summary="0.0.2">
-      <option name="closed" value="true" />
-      <created>1767876717037</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1767876717037</updated>
-    </task>
-    <task id="LOCAL-00013" summary="0.0.2">
-      <option name="closed" value="true" />
-      <created>1767980708496</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1767980708496</updated>
-    </task>
-    <task id="LOCAL-00014" summary="0.0.2">
-      <option name="closed" value="true" />
-      <created>1768167354274</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1768167354275</updated>
-    </task>
-    <task id="LOCAL-00015" summary="0.0.2">
-      <option name="closed" value="true" />
-      <created>1768167483611</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1768167483611</updated>
-    </task>
-    <task id="LOCAL-00016" summary="0.0.2">
-      <option name="closed" value="true" />
-      <created>1768575671755</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1768575671755</updated>
-    </task>
-    <task id="LOCAL-00017" summary="0.0.2">
-      <option name="closed" value="true" />
-      <created>1768575792779</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1768575792779</updated>
-    </task>
-    <task id="LOCAL-00018" summary="радикальные изменения от Макса">
-      <option name="closed" value="true" />
-      <created>1768579640611</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1768579640611</updated>
-    </task>
-    <task id="LOCAL-00019" summary="радикальные изменения от Макса">
-      <option name="closed" value="true" />
-      <created>1768580242931</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1768580242931</updated>
-    </task>
-    <option name="localTasksCounter" value="20" />
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -256,7 +193,6 @@
     <MESSAGE value="0.0.1 please" />
     <MESSAGE value="0.0.1 new please" />
     <MESSAGE value="0.0.2" />
-    <MESSAGE value="радикальные изменения от Макса" />
-    <option name="LAST_COMMIT_MESSAGE" value="радикальные изменения от Макса" />
+    <option name="LAST_COMMIT_MESSAGE" value="0.0.2" />
   </component>
 </project>

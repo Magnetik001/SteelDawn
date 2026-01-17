@@ -22,7 +22,6 @@ COUNTRIES_BY_YEAR = {
 
 
 class Menu(arcade.View):
-    """Первый экран: выбор 1938 или 1941 года"""
 
     def __init__(self):
         super().__init__()
@@ -36,7 +35,6 @@ class Menu(arcade.View):
         self.anchor_layout = UIAnchorLayout()
         self.box_layout = UIBoxLayout(vertical=True, space_between=30)
 
-        # Стиль кнопок
         button_style = {
             "normal": {
                 "bg": (248, 244, 235, 0),
@@ -54,7 +52,6 @@ class Menu(arcade.View):
             },
         }
 
-        # Кнопка 1938
         btn_1938 = UIFlatButton(
             text="> 1938 - ЗА ЧАС ДО СОБЫТИЙ",
             width=520,
@@ -64,7 +61,6 @@ class Menu(arcade.View):
         btn_1938.on_click = lambda e: self.select_year(1938)
         self.box_layout.add(btn_1938)
 
-        # Кнопка 1941
         btn_1941 = UIFlatButton(
             text="> 1941 - ВСЕ НА ВОСТОК!!!",
             width=520,
@@ -79,7 +75,6 @@ class Menu(arcade.View):
         self.manager.add(self.anchor_layout)
 
     def select_year(self, year):
-        """Переходим к выбору страны для выбранного года"""
         self.selected_year = year
         country_view = CountrySelectionView(year)
         self.window.show_view(country_view)
@@ -91,7 +86,6 @@ class Menu(arcade.View):
     def on_draw(self):
         self.clear()
 
-        # Текст с заголовками
         arcade.draw_text(
             "STEEL DAWN",
             self.window.width // 2,
@@ -138,9 +132,7 @@ class Menu(arcade.View):
         self.manager.draw()
 
 
-# Выбор страны
 class CountrySelectionView(arcade.View):
-    """Второй экран: выбор страны для выбранного года"""
 
     def __init__(self, year):
         super().__init__()
@@ -152,10 +144,8 @@ class CountrySelectionView(arcade.View):
         self.manager = UIManager(self.window)
         self.manager.enable()
 
-        # Создаем основной контейнер с прокруткой
         self.main_box = UIBoxLayout(vertical=True, space_between=10)
 
-        # Заголовок
         title_style = {
             "normal": {
                 "bg": (248, 244, 235, 0),
@@ -167,7 +157,6 @@ class CountrySelectionView(arcade.View):
         }
 
 
-        # Стиль кнопок стран
         country_button_style = {
             "normal": {
                 "bg": (248, 244, 235, 0),
@@ -185,7 +174,6 @@ class CountrySelectionView(arcade.View):
             },
         }
 
-        # Кнопки всех стран
         for country in self.countries:
             btn = UIFlatButton(
                 text=f"> {country.upper()}",
@@ -196,7 +184,6 @@ class CountrySelectionView(arcade.View):
             btn.on_click = lambda e, c=country: self.startGame(c)
             self.main_box.add(btn)
 
-        # Кнопка возврата
         back_style = {
             "normal": {
                 "bg": (248, 244, 235, 0),
@@ -220,7 +207,6 @@ class CountrySelectionView(arcade.View):
         back_btn.on_click = lambda e: self.window.show_view(Menu())
         self.main_box.add(back_btn)
 
-        # Размещаем по центру
         self.anchor = UIAnchorLayout()
         self.anchor.add(self.main_box, anchor_x="center", anchor_y="top", align_y=-100)
         self.manager.add(self.anchor)
@@ -230,12 +216,11 @@ class CountrySelectionView(arcade.View):
         self.manager.disable()
 
     def startGame(self, event):
-        self.window.show_view(game.Game())
+        self.window.show_view(game.Game(self.year, event))
 
     def on_draw(self):
         self.clear()
 
-        # Фоновый текст
         arcade.draw_text(
             f"{self.year}",
             self.window.width // 2,
@@ -298,14 +283,3 @@ class CountrySelectionView(arcade.View):
         )
 
         self.manager.draw()
-
-
-def main():
-    window = arcade.Window(1024, 768, "STEEL DAWN")
-    start_view = Menu()
-    window.show_view(start_view)
-    arcade.run()
-
-
-if __name__ == "__main__":
-    main()
