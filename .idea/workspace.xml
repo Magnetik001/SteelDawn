@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="0.0.2" />
+    <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="0.0.2">
+      <change beforePath="$PROJECT_DIR$/.idea/SteelDawn.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/countrySelection.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/provinces.json" beforeDir="false" afterPath="$PROJECT_DIR$/provinces.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenarioSelection.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,12 +35,12 @@
     &quot;assignee&quot;: &quot;Magnetik001&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Magnetik001/SteelDawn.git",
-    "accountId": "e01e531f-539d-436e-978c-30a88d1f52b3"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Magnetik001/SteelDawn&quot;,
+    &quot;accountId&quot;: &quot;3ab10c6e-febf-4420-a3ad-188767daa359&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>

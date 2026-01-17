@@ -53,7 +53,7 @@ class Menu(arcade.View):
         }
 
         btn_1938 = UIFlatButton(
-            text="> 1938 - ЗА ЧАС ДО СОБЫТИЙ",
+            text="> 1938 г.",
             width=520,
             height=36,
             style=button_style
@@ -62,7 +62,7 @@ class Menu(arcade.View):
         self.box_layout.add(btn_1938)
 
         btn_1941 = UIFlatButton(
-            text="> 1941 - ВСЕ НА ВОСТОК!!!",
+            text="> 1941 г.",
             width=520,
             height=36,
             style=button_style

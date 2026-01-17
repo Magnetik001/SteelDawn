@@ -83,9 +83,6 @@ class Game(arcade.View):
         self.manager = UIManager()
         self.manager.enable()
 
-        if self.country == "GER":
-            self.world_camera.position = (2544, 2670)
-
         self.info_label = UILabel(
             text="",
             text_color=arcade.color.BLACK,
