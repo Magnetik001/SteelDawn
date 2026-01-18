@@ -17,6 +17,19 @@ class Game(arcade.View):
         self.world_camera = arcade.camera.Camera2D()
         self.gui_camera = arcade.camera.Camera2D()
 
+        with (open("provinces.json", "r", encoding="utf-8") as provinces_file,
+            open("countries.json", "r", encoding="utf-8") as countries_file):
+            provinces_data = json.load(provinces_file)
+            countries_data = json.load(countries_file)
+            for i in countries_data:
+                if i == self.country:
+                    capital = countries_data[i]["capital"]
+                    break
+            for i in provinces_data:
+                if i == capital.lower():
+                    self.world_camera.position = (provinces_data[i]["center_x"], provinces_data[i]["center_y"])
+                    break
+
         self.all_provinces = arcade.SpriteList()
         self.background = arcade.SpriteList()
         self.background.append(arcade.Sprite("images\фон.png", center_x=2608, center_y=2432))
@@ -35,6 +48,8 @@ class Game(arcade.View):
         self.prov_box_layout = UIBoxLayout(vertical=True, space_between=10)
         self.prov_anchor_layout.add(self.prov_box_layout, anchor_x="center", anchor_y="top", align_y=-550, align_x=-600)
         self.prov_manager.add(self.prov_anchor_layout)
+
+        # self.country_overview()
 
     def show_message(self):
         self.message_opened = True
@@ -60,9 +75,48 @@ class Game(arcade.View):
             self.army_positions.append(self.prov_center)
         self.close_message()
 
+    # def country_overview(self):
+    #     with (open("provinces.json", "r", encoding="utf-8") as provinces_file,
+    #         open("countries.json", "r", encoding="utf-8") as countries_file):
+    #         provinces_data = json.load(provinces_file)
+    #         countries_data = json.load(countries_file)
+    #
+    #         for country_name in countries_data:
+    #             for prov_name in provinces_data:
+    #                 if provinces_data[prov_name]["color"] == countries_data[country_name]["color"]:
+    #                     countries_data[country_name]["resources"].append(provinces_data[prov_name]["resource"])
+    #                     countries_data[country_name]["provinces"].append(prov_name)
+    #
+    #     with open("countries.json", "w", encoding="utf-8") as countries_file:
+    #         json.dump(countries_data, countries_file, ensure_ascii=False, indent=4)
+    #
+
     def close_message(self):
         self.message_opened = False
         self.message_box.clear()
+
+    def on_country_button_click(self, event):
+        with open("countries.json", "r", encoding="utf-8") as countries_file:
+            countries_data = json.load(countries_file)
+        country_info = countries_data.get(self.country, {})
+
+        provinces_list = ", ".join(country_info.get("provinces", [])) or "Нет провинций"
+        resources_list = ", ".join(country_info.get("resources", [])) or "Нет ресурсов"
+        stats_text = (
+            f"Страна: {self.country}\n"
+            f"Год: {self.year}\n"
+            f"Провинции: {provinces_list}\n"
+            f"Ресурсы: {resources_list}"
+        )
+
+        message_box = UIMessageBox(
+            width=400,
+            height=250,
+            message_text=stats_text,
+            buttons=("Закрыть",)
+        )
+        message_box.with_padding(all=15)
+        self.manager.add(message_box)
 
     def on_show_view(self):
         arcade.set_background_color((42, 44, 44))
@@ -83,6 +137,19 @@ class Game(arcade.View):
         self.manager = UIManager()
         self.manager.enable()
 
+        country_button = arcade.gui.UIFlatButton(text="Статистика", width=120, height=40)
+        country_button.on_click = self.on_country_button_click
+
+        anchor_layout = arcade.gui.UIAnchorLayout()
+        anchor_layout.add(
+            country_button,
+            anchor_x="left",
+            anchor_y="top",
+            align_x=10,
+            align_y=-10
+        )
+        self.manager.add(anchor_layout)
+
         self.info_label = UILabel(
             text="",
             text_color=arcade.color.BLACK,
@@ -93,7 +160,6 @@ class Game(arcade.View):
 
         self.info_box = UIBoxLayout(vertical=True)
         self.info_box.add(self.info_label)
-
         self.info_box.visible = False
 
     def on_update(self, delta_time: float):
@@ -115,19 +181,15 @@ class Game(arcade.View):
         if self.message_opened == False:
             for prov in self.all_provinces:
                 if prov.collides_with_point((world_x, world_y)):
-                    text = (
-                        f"Province: {prov.name}\n"
-                        f"Color: {prov.color}\n"
-                        f"Resources: {prov.resource}"
-                    )
-                    self.info_label.text = text
                     self.prov_name = prov.name
                     self.prov_resource = prov.resource
                     self.prov_center = (prov.center_x, prov.center_y)
-                    self.show_message()
-                    self.info_box.visible = True
-
-                    self.world_camera.position = (prov.center_x, prov.center_y)
+                    with open("countries.json", "r", encoding="utf-8") as file:
+                        data = json.load(file)
+                        if self.prov_name in data[self.country]["provinces"]:
+                            self.show_message()
+                            self.info_box.visible = True
+                            self.world_camera.position = (prov.center_x, prov.center_y)
 
                     return
 
