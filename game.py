@@ -9,7 +9,8 @@ class Game(arcade.View):
         super().__init__()
 
         self.army_positions = []
-        self.message_opened = False
+        self.message_opened_without_army = False
+        self.message_opened_with_army = False
 
         self.year = year
         self.country = country
@@ -32,7 +33,7 @@ class Game(arcade.View):
 
         self.all_provinces = arcade.SpriteList()
         self.background = arcade.SpriteList()
-        self.background.append(arcade.Sprite("images\фон.png", center_x=2608, center_y=2432))
+        self.background.append(arcade.Sprite("images/background/фон.png", center_x=2608, center_y=2432))
 
         self.pan_speed = 20.0
         self.keys = {key: False for key in (arcade.key.W, arcade.key.S, arcade.key.A, arcade.key.D)}
@@ -51,29 +52,59 @@ class Game(arcade.View):
 
         # self.country_overview()
 
-    def show_message(self):
-        self.message_opened = True
+    def show_prov_without_army(self):
+        self.message_opened_without_army = True
 
-        self.message_box = UIMessageBox(
+        self.prov_without_army = UIMessageBox(
             width=300, height=200,
             message_text=f"{self.prov_name.upper()}\n{self.prov_resource}",
             buttons=("Купить армию", "Закрыть")
         )
-        self.message_box.on_action = self.on_message_button
-        self.prov_manager.add(self.message_box)
-        self.message_box.with_padding(top=20, left=10, right=10, bottom=10)
+        self.prov_without_army.on_action = self.on_message_button_without_army
+        self.prov_manager.add(self.prov_without_army)
 
-    def on_message_button(self, button_text):
+    def show_prov_with_army(self):
+        self.message_opened_with_army = True
+
+        self.prov_with_army = UIMessageBox(
+            width=300, height=200,
+            message_text=f"{self.prov_name.upper()}\n{self.prov_resource}",
+            buttons=("Переместить армию", "Закрыть")
+        )
+        self.prov_with_army.on_action = self.on_message_button_with_army
+        self.prov_manager.add(self.prov_with_army)
+
+    def on_message_button_without_army(self, button_text):
         if button_text.action == "Закрыть":
-            self.close_message()
+            self.close_message_without_army()
         elif button_text.action == "Купить армию":
             self.buy_army()
 
+    def on_message_button_with_army(self, button_text):
+        if button_text.action == "Закрыть":
+            self.close_message_with_army()
+        elif button_text.action == "Переместить армию":
+            self.buy_army()
+
     def buy_army(self):
-        self.message_opened = False
+        self.message_opened_without_army = False
         if self.prov_center not in self.army_positions:
             self.army_positions.append(self.prov_center)
-        self.close_message()
+        self.close_message_without_army()
+
+    def move_army(self):
+        self.message_opened_without_army = False
+        if self.prov_center not in self.army_positions:
+            self.army_positions.append(self.prov_center)
+        self.close_message_without_army()
+
+    def close_message_without_army(self):
+        self.message_opened_without_army = False
+        self.prov_without_army.clear()
+
+    def close_message_with_army(self):
+        self.message_opened_with_army = False
+        self.prov_with_army.clear()
 
     # def country_overview(self):
     #     with (open("provinces.json", "r", encoding="utf-8") as provinces_file,
@@ -89,11 +120,8 @@ class Game(arcade.View):
     #
     #     with open("countries.json", "w", encoding="utf-8") as countries_file:
     #         json.dump(countries_data, countries_file, ensure_ascii=False, indent=4)
-    #
 
-    def close_message(self):
-        self.message_opened = False
-        self.message_box.clear()
+
 
     def on_country_button_click(self, event):
         with open("countries.json", "r", encoding="utf-8") as countries_file:
@@ -178,7 +206,7 @@ class Game(arcade.View):
     def on_mouse_press(self, x, y, button, modifiers):
         world_x, world_y, _ = self.world_camera.unproject((x, y))
 
-        if self.message_opened == False:
+        if self.message_opened_without_army == False:
             for prov in self.all_provinces:
                 if prov.collides_with_point((world_x, world_y)):
                     self.prov_name = prov.name
@@ -187,7 +215,7 @@ class Game(arcade.View):
                     with open("countries.json", "r", encoding="utf-8") as file:
                         data = json.load(file)
                         if self.prov_name in data[self.country]["provinces"]:
-                            self.show_message()
+                            self.show_prov_without_army()
                             self.info_box.visible = True
                             self.world_camera.position = (prov.center_x, prov.center_y)
 
