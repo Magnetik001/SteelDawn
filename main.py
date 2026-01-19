@@ -1,7 +1,7 @@
 import arcade
 
 import menu
-
+import message_buy_army
 
 class MainWindow(arcade.Window):
     def __init__(self):

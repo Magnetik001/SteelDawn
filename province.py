@@ -9,3 +9,4 @@ class Province(arcade.Sprite):
         self.color = color
         self.name = name
         self.resource = resource
+        self.army = False

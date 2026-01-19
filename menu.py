@@ -1,6 +1,7 @@
 import arcade
 from arcade.gui import UIManager, UIFlatButton, UIAnchorLayout, UIBoxLayout
 import game
+import style
 
 COUNTRIES_BY_YEAR = {
     1938: [
@@ -35,28 +36,11 @@ class Menu(arcade.View):
         self.anchor_layout = UIAnchorLayout()
         self.box_layout = UIBoxLayout(vertical=True, space_between=30)
 
-        button_style = {
-            "normal": {
-                "bg": (248, 244, 235, 0),
-                "font_color": (40, 40, 40),
-                "font_name": ("Courier New", "Consolas", "monospace"),
-                "font_size": 24,
-                "border": 0,
-            },
-            "hover": {
-                "font_color": (20, 20, 20),
-                "bg": (235, 230, 220, 100),
-            },
-            "press": {
-                "font_color": (0, 0, 0),
-            },
-        }
-
         btn_1938 = UIFlatButton(
             text="> 1938 г.",
             width=520,
             height=36,
-            style=button_style
+            style=style.button_style
         )
         btn_1938.on_click = lambda e: self.select_year(1938)
         self.box_layout.add(btn_1938)
@@ -65,7 +49,7 @@ class Menu(arcade.View):
             text="> 1941 г.",
             width=520,
             height=36,
-            style=button_style
+            style=style.button_style
         )
         btn_1941.on_click = lambda e: self.select_year(1941)
         self.box_layout.add(btn_1938)
@@ -146,63 +130,22 @@ class CountrySelectionView(arcade.View):
 
         self.main_box = UIBoxLayout(vertical=True, space_between=10)
 
-        title_style = {
-            "normal": {
-                "bg": (248, 244, 235, 0),
-                "font_color": (60, 60, 60),
-                "font_name": ("Courier New", "Consolas", "monospace"),
-                "font_size": 20,
-                "border": 0,
-            }
-        }
-
-
-        country_button_style = {
-            "normal": {
-                "bg": (248, 244, 235, 0),
-                "font_color": (40, 40, 40),
-                "font_name": ("Courier New", "Consolas", "monospace"),
-                "font_size": 18,
-                "border": 0,
-            },
-            "hover": {
-                "font_color": (20, 20, 20),
-                "bg": (235, 230, 220, 100),
-            },
-            "press": {
-                "font_color": (0, 0, 0),
-            },
-        }
 
         for country in self.countries:
             btn = UIFlatButton(
                 text=f"> {country.upper()}",
                 width=480,
                 height=32,
-                style=country_button_style
+                style=style.country_button_style
             )
             btn.on_click = lambda e, c=country: self.startGame(c)
             self.main_box.add(btn)
-
-        back_style = {
-            "normal": {
-                "bg": (248, 244, 235, 0),
-                "font_color": (100, 100, 100),
-                "font_name": ("Courier New", "Consolas", "monospace"),
-                "font_size": 16,
-                "border": 0,
-            },
-            "hover": {
-                "font_color": (70, 70, 70),
-                "bg": (235, 230, 220, 80),
-            }
-        }
 
         back_btn = UIFlatButton(
             text="< НАЗАД",
             width=300,
             height=28,
-            style=back_style
+            style=style.back_style
         )
         back_btn.on_click = lambda e: self.window.show_view(Menu())
         self.main_box.add(back_btn)
