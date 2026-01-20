@@ -1,11 +1,14 @@
 import arcade
 import arcade.gui
 import style
+import menu
+import game
 
 class Message(arcade.View):
-    def __init__(self, prov, resourse):
+    def __init__(self, prov, resourse, year):
         super().__init__()
         self.prov_name = prov.name
+        self.year = year
         self.prov_resource = resourse
         arcade.set_background_color((129, 127, 104))
 
@@ -47,7 +50,7 @@ class Message(arcade.View):
 
 
     def close_message(self):
-        pass
+        self.window.show_view(game.Game(self.year, event))
 
     def buy_army(self):
         pass

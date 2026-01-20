@@ -171,7 +171,7 @@ class Game(arcade.View):
 
     def show_message(self):
         resourse = "-"
-        self.window.show_view(message_buy_army.Message(self.prov, resourse))
+        self.window.show_view(message_buy_army.Message(self.prov, resourse, self.year))
 
     def on_draw(self):
         self.clear()
