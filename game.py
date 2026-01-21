@@ -59,22 +59,22 @@ class Game(arcade.View):
         self.min_zoom = 0.3
         self.max_zoom = 3.0
 
-        self.country_overview()
-
-    def country_overview(self):
-        with (open("provinces.json", "r", encoding="utf-8") as provinces_file,
-            open("countries.json", "r", encoding="utf-8") as countries_file):
-            provinces_data = json.load(provinces_file)
-            countries_data = json.load(countries_file)
-
-            for country_name in countries_data:
-                for prov_name in provinces_data:
-                    if provinces_data[prov_name]["color"] == countries_data[country_name]["color"]:
-                        countries_data[country_name]["resources"].append(provinces_data[prov_name]["resource"])
-                        countries_data[country_name]["provinces"].append(prov_name)
-
-        with open("countries.json", "w", encoding="utf-8") as countries_file:
-            json.dump(countries_data, countries_file, ensure_ascii=False, indent=4)
+    #     self.country_overview()
+    #
+    # def country_overview(self):
+    #     with (open("provinces.json", "r", encoding="utf-8") as provinces_file,
+    #         open("countries.json", "r", encoding="utf-8") as countries_file):
+    #         provinces_data = json.load(provinces_file)
+    #         countries_data = json.load(countries_file)
+    #
+    #         for country_name in countries_data:
+    #             for prov_name in provinces_data:
+    #                 if provinces_data[prov_name]["color"] == countries_data[country_name]["color"]:
+    #                     countries_data[country_name]["resources"].append(provinces_data[prov_name]["resource"])
+    #                     countries_data[country_name]["provinces"].append(prov_name)
+    #
+    #     with open("countries.json", "w", encoding="utf-8") as countries_file:
+    #         json.dump(countries_data, countries_file, ensure_ascii=False, indent=4)
 
 
     def show_prov_without_army(self):
