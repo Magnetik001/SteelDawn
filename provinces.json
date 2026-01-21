@@ -182,7 +182,7 @@
   "тернополь": {"center_x": 3614.0, "center_y": 2446.5, "color": [150, 110, 108], "resource":  "-"},
   "станиславов": {"center_x": 3642.5, "center_y": 2277.0, "color": [150, 110, 108], "resource":  "-"},
   "гулбене": {"center_x": 3512.5, "center_y": 3328.5, "color": [135, 87, 49], "resource":  "-"},
-  "таллин": {"center_x": 3424.5, "center_y": 3422.5, "color": [101, 133, 146], "resource":  "-"},
+  "таллин": {"center_x": 3424.5, "center_y": 3422.5, "color": [0, 133, 224], "resource":  "-"},
   "любляна": {"center_x": 2609.0, "center_y": 1867.0, "color": [23, 70, 158], "resource":  "-"},
   "марибор": {"center_x": 2703.5, "center_y": 1904.5, "color": [23, 70, 158], "resource":  "-"},
   "загреб": {"center_x": 2713.5, "center_y": 1796.5, "color": [23, 70, 158], "resource":  "-"},
