@@ -8,6 +8,12 @@ class Game(arcade.View):
     def __init__(self, year: int, country: str):
         super().__init__()
 
+        self.prov_center = ""
+
+        self.moving_army = False
+
+        self.prov_name = ""
+
         self.army_positions = []
         self.message_opened = False
 
@@ -114,14 +120,24 @@ class Game(arcade.View):
         elif action == "Переместить армию":
             self.move_army()
             self.close_message()
+        elif action == "Выбрать другую":
+            self.move_army()
+            self.close_message()
+        elif action == "Завершить этот ход":
+            self.moving_army = False
+            self.close_message()
+        elif action == "Переместить сюда":
+            self.buy_army()
+            del self.army_positions[self.army_positions.index(self.last_prov_center)]
+            self.moving_army = False
+            self.close_message()
 
     def buy_army(self):
         if self.prov_center not in self.army_positions:
             self.army_positions.append(self.prov_center)
 
     def move_army(self):
-        if self.prov_center not in self.army_positions:
-            self.army_positions.append(self.prov_center)
+        self.moving_army = True
 
     def close_message(self):
         if self.current_message_box:
@@ -215,21 +231,59 @@ class Game(arcade.View):
         world_x, world_y, _ = self.world_camera.unproject((x, y))
         for prov in self.all_provinces:
             if prov.collides_with_point((world_x, world_y)):
+                self.last_prov_name = self.prov_name
                 self.prov_name = prov.name
                 self.prov_resource = prov.resource
+                self.last_prov_center = self.prov_center
                 self.prov_center = (prov.center_x, prov.center_y)
-
-                with open("countries.json", "r", encoding="utf-8") as file:
-                    data = json.load(file)
-                    if self.prov_name in data.get(self.country, {}).get("provinces", []):
+                if not self.moving_army:
+                    with open("countries.json", "r", encoding="utf-8") as file:
+                        data = json.load(file)
+                        if self.prov_name in data.get(self.country, {}).get("provinces", []) or self.prove_centre in self.army_positions:
+                            if self.prov_center in self.army_positions:
+                                self.show_prov_with_army()
+                            else:
+                                self.show_prov_without_army()
+                            self.world_camera.position = self.clamp_camera(
+                                prov.center_x, prov.center_y
+                            )
+                            return
+                else:
+                    with (open("countries.json", "r", encoding="utf-8") as file):
                         if self.prov_center in self.army_positions:
-                            self.show_prov_with_army()
+                            self.show_prov_recently_with_army()  //TODO
                         else:
-                            self.show_prov_without_army()
+                            self.show_prov_move_army_here() //TODO
                         self.world_camera.position = self.clamp_camera(
                             prov.center_x, prov.center_y
                         )
                         return
+
+    def show_prov_recently_with_army(self):
+        self.message_opened = True
+        self.current_message_box = UIMessageBox(
+            width=300,
+            height=200,
+            message_text=f"{self.prov_name.upper()}\nуже имеет армию.",
+            buttons=("Выбрать другую", "Завершить этот ход")
+        )
+        self.current_message_box.on_action = self.on_message_button_with_army
+        self.manager.add(self.current_message_box)
+
+    def show_prov_move_army_here(self):
+        self.message_opened = True
+        self.current_message_box = UIMessageBox(
+            width=500,
+            height=200,
+            message_text=f"Переместить армию из {self.last_prov_name.upper()}\n в {self.prov_name.upper()}",
+            buttons=("Переместить сюда", "Выбрать другую", "Завершить этот ход")
+        )
+        self.current_message_box.on_action = self.on_message_button_with_army
+        self.manager.add(self.current_message_box)
+
+
+
+
 
     def on_draw(self):
         self.clear()
