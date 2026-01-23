@@ -164,7 +164,7 @@ class CountrySelectionView(arcade.View):
         columns = [UIBoxLayout(vertical=True, space_between=10) for _ in range(num_cols)]
 
         for i, country in enumerate(self.countries):
-            flag_path = f"flags/{country}.png"
+            flag_path = f"images/flags/{country}.png"
             texture = arcade.load_texture(flag_path)
             flag_widget = UIImage(texture=texture, width=120, height=75)
 
@@ -216,5 +216,4 @@ class CountrySelectionView(arcade.View):
             font_name=("Courier New",),
             bold=True
         )
-
         self.manager.draw()

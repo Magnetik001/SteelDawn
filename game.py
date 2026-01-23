@@ -85,7 +85,7 @@ class Game(arcade.View):
             data = json.load(file)
             for name in data:
                 prov = province.Province(
-                    f"images/{name}.png",
+                    f"images/provinces/{name}.png",
                     data[name]["center_x"],
                     data[name]["center_y"],
                     data[name]["color"],
