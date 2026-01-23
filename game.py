@@ -1,8 +1,6 @@
 import arcade
 from arcade.gui import UIManager, UILabel, UIBoxLayout, UIMessageBox, UIFlatButton, UIAnchorLayout
 import json
-from collections import Counter
-
 import province
 
 
@@ -11,7 +9,7 @@ class Game(arcade.View):
         super().__init__()
 
         self.army_positions = []
-        self.province_panel = False
+        self.message_opened = False
 
         self.year = year
         self.country = country
@@ -56,7 +54,7 @@ class Game(arcade.View):
         self.last_mouse_y = 0
 
         self.manager = None
-        self.message_box = None
+        self.current_message_box = None
 
         self.min_zoom = 0.3
         self.max_zoom = 3.0
@@ -78,6 +76,83 @@ class Game(arcade.View):
     #     with open("countries.json", "w", encoding="utf-8") as countries_file:
     #         json.dump(countries_data, countries_file, ensure_ascii=False, indent=4)
 
+
+    def show_prov_without_army(self):
+        self.message_opened = True
+        self.current_message_box = UIMessageBox(
+            width=300,
+            height=200,
+            message_text=f"{self.prov_name.upper()}\n{self.prov_resource}",
+            buttons=("Купить армию", "Закрыть")
+        )
+        self.current_message_box.on_action = self.on_message_button_without_army
+        self.manager.add(self.current_message_box)
+
+    def show_prov_with_army(self):
+        self.message_opened = True
+        self.current_message_box = UIMessageBox(
+            width=300,
+            height=200,
+            message_text=f"{self.prov_name.upper()}\n{self.prov_resource}",
+            buttons=("Переместить армию", "Закрыть")
+        )
+        self.current_message_box.on_action = self.on_message_button_with_army
+        self.manager.add(self.current_message_box)
+
+    def on_message_button_without_army(self, event):
+        action = event.action
+        if action == "Закрыть":
+            self.close_message()
+        elif action == "Купить армию":
+            self.buy_army()
+            self.close_message()
+
+    def on_message_button_with_army(self, event):
+        action = event.action
+        if action == "Закрыть":
+            self.close_message()
+        elif action == "Переместить армию":
+            self.move_army()
+            self.close_message()
+
+    def buy_army(self):
+        if self.prov_center not in self.army_positions:
+            self.army_positions.append(self.prov_center)
+
+    def move_army(self):
+        if self.prov_center not in self.army_positions:
+            self.army_positions.append(self.prov_center)
+
+    def close_message(self):
+        if self.current_message_box:
+            self.current_message_box.clear()
+            self.current_message_box = None
+        self.message_opened = False
+
+    def on_country_button_click(self, event):
+        with open("countries.json", "r", encoding="utf-8") as countries_file:
+            countries_data = json.load(countries_file)
+        country_info = countries_data.get(self.country, {})
+
+        provinces_list = ", ".join(country_info.get("provinces", [])) or "Нет провинций"
+        resources_list = ", ".join(country_info.get("resources", [])) or "Нет ресурсов"
+        stats_text = (
+            f"Страна: {self.country}\n"
+            f"Год: {self.year}\n"
+            f"Провинции: {provinces_list}\n"
+            f"Ресурсы: {resources_list}"
+        )
+
+        message_box = UIMessageBox(
+            width=400,
+            height=250,
+            message_text=stats_text,
+            buttons=("Закрыть",)
+        )
+        message_box.with_padding(all=15)
+        message_box.on_action = lambda e: message_box.clear()
+        self.manager.add(message_box)
+
     def on_show_view(self):
         arcade.set_background_color((42, 44, 44))
 
@@ -97,262 +172,76 @@ class Game(arcade.View):
         self.manager = UIManager()
         self.manager.enable()
 
-        self.country_button = UIFlatButton(text="Статистика", width=120, height=40)
-        self.country_button.on_click = lambda e: self.country_statistic()
+        country_button = UIFlatButton(text="Статистика", width=120, height=40)
+        country_button.on_click = self.on_country_button_click
 
-        self.country_button_container = UIAnchorLayout()
-        self.country_button_container.add(
-            self.country_button,
+        anchor_layout = UIAnchorLayout()
+        anchor_layout.add(
+            country_button,
             anchor_x="left",
             anchor_y="top",
             align_x=10,
             align_y=-10
         )
-        self.manager.add(self.country_button_container)
+        self.manager.add(anchor_layout)
 
-    def show_province_panel(self, has_army: bool):
-        if self.province_panel:
+    def on_update(self, delta_time: float):
+        if self.dragging:
             return
 
-        self.province_panel = True
+        x, y = self.world_camera.position
 
-        panel = UIBoxLayout(vertical=True, space_between=12)
-        panel.with_padding(top=15, bottom=15, left=15, right=15)
-        panel.with_background(color=(32, 35, 40, 220))
-        panel.style = {
-            "border_color": (90, 95, 105),
-            "border_width": 2
-        }
+        if self.keys[arcade.key.W]:
+            y += self.pan_speed
+        if self.keys[arcade.key.S]:
+            y -= self.pan_speed
+        if self.keys[arcade.key.A]:
+            x -= self.pan_speed
+        if self.keys[arcade.key.D]:
+            x += self.pan_speed
 
-        title = UILabel(text=self.prov_name.upper(), width=280, align="left")
-        title.style = {
-            "normal": {
-                "font_size": 18,
-                "text_color": arcade.color.WHITE
-            }
-        }
-
-        divider1 = UILabel(text="─" * 30)
-        divider1.style = {
-            "normal": {
-                "text_color": (120, 120, 120)
-            }
-        }
-
-        resource_label = UILabel(text=f"Ресурс: {self.prov_resource}", width=280, align="left")
-        resource_label.style = {
-            "normal": 
-                {"text_color": (200, 200, 200)
-                 }
-        }
-
-        army_status = "присутствует" if has_army else "отсутствует"
-        army_label = UILabel(text=f"Армия: {army_status}", width=280, align="left")
-        army_label.style = {
-            "normal": {
-                "text_color": (160, 160, 160)
-            }
-        }
-
-        divider2 = UILabel(text="─" * 30)
-        divider2.style = divider1.style
-
-        if has_army:
-            button_text = "Переместить армию"
-            on_click_action = self.move_army
-        else:
-            button_text = "Купить армию"
-            on_click_action = self.buy_army
-
-        action_button = UIFlatButton(text=button_text, width=260, height=40)
-        action_button.on_click = lambda e: on_click_action()
-
-        close_button = UIFlatButton(text="Закрыть", width=260, height=36)
-        close_button.on_click = lambda e: self.close_province_message()
-
-        for widget in [title, divider1, resource_label, army_label, divider2, action_button, close_button]:
-            panel.add(widget)
-
-        anchor = UIAnchorLayout()
-        anchor.add(
-            panel,
-            anchor_x="left",
-            anchor_y="bottom",
-            align_x=15,
-            align_y=15
-        )
-
-        self.message_box = anchor
-        self.manager.add(anchor)
-
-    def country_statistic(self):
-        if getattr(self, 'country_panel_opened', False):
-            return
-
-        self.country_panel_opened = True
-        self.manager.remove(self.country_button_container)
-
-        with open("countries.json", mode="r", encoding="UTF-8") as file:
-            data = json.load(file)
-            provinces = data[self.country]["provinces"]
-            resources = dict(Counter(data[self.country]["resources"]))
-
-        del resources["-"]
-        resources_str = str(resources).replace(",", ";").replace("'", "")[1:-1]
-
-        panel = UIBoxLayout(vertical=True, space_between=10)
-        panel.with_padding(top=14, bottom=14, left=16, right=16)
-        panel.with_background(color=(28, 30, 34, 230))
-        panel.style = {
-            "border_color": (85, 90, 100),
-            "border_width": 2
-        }
-
-        title = UILabel(
-            text=self.country.upper(),
-            width=300,
-            align="left"
-        )
-        title.style = {
-            "normal": {
-                "font_size": 20,
-                "text_color": (240, 240, 240)
-            }
-        }
-
-        divider1 = UILabel("─" * 34)
-        divider1.style = {
-            "normal": {
-                "text_color": (120, 120, 120)
-            }
-        }
-
-        resource_label = UILabel(resources_str)
-        resource_label.style = {
-            "normal": {
-                "font_size": 20,
-                "text_color": (240, 240, 240)
-            }
-        }
-
-        divider2 = UILabel("─" * 34)
-        divider2.style = {
-            "normal": {
-                "text_color": (120, 120, 120)
-            }
-        }
-
-        panel.add(title)
-        panel.add(divider1)
-        panel.add(resource_label)
-        panel.add(divider2)
-
-        current_line = []
-        current_length = 0
-        for prov in provinces:
-            prov_len = len(prov)
-            added_length = prov_len + (2 if current_line else 0)
-            if current_length + added_length > 40 and current_line:
-                line_text = ", ".join(current_line)
-                label = UILabel(text=line_text, width=280, align="left")
-                label.style = {
-                    "normal": {
-                        "font_size": 20,
-                        "text_color": (240, 240, 240)
-                    }
-                }
-                panel.add(label)
-                current_line = [prov]
-                current_length = prov_len
-            else:
-                current_line.append(prov)
-                current_length += added_length
-
-        if current_line:
-            line_text = ", ".join(current_line)
-            label = UILabel(text=line_text, width=280, align="left")
-            label.style = {
-                "normal": {
-                    "font_size": 20,
-                    "text_color": (240, 240, 240)
-                }
-            }
-            panel.add(label)
-
-        divider3 = UILabel("─" * 34)
-        divider3.style = {
-            "normal": {
-                "text_color": (120, 120, 120)
-            }
-        }
-
-        close_button = UIFlatButton(text="Закрыть", width=280, height=36)
-        close_button.on_click = lambda e: self.close_country_statistic_message()
-
-        panel.add(divider3)
-        panel.add(close_button)
-
-        anchor = UIAnchorLayout()
-        anchor.add(
-            panel,
-            anchor_x="left",
-            anchor_y="top",
-            align_x=15,
-            align_y=-15
-        )
-
-        self.country_panel = anchor
-        self.manager.add(anchor)
-
-    def buy_army(self):
-        if self.prov_center not in self.army_positions:
-            self.army_positions.append(self.prov_center)
-
-    def move_army(self):
-        if self.prov_center not in self.army_positions:
-            self.army_positions.append(self.prov_center)
-
-    def close_province_message(self):
-        if self.message_box is not None and self.manager:
-            self.manager.remove(self.message_box)
-            self.message_box = None
-        self.province_panel = False
-
-    def close_country_statistic_message(self):
-        if self.country_panel is not None and self.manager:
-            self.manager.remove(self.country_panel)
-            self.country_panel = None
-        self.manager.add(self.country_button_container)
-        self.country_panel_opened = False
-
-    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+        x, y = self.clamp_camera(x, y)
+        self.world_camera.position = (x, y)
+    def on_mouse_press(self, x, y, button, modifiers):
         if button == arcade.MOUSE_BUTTON_MIDDLE:
             self.dragging = True
             self.last_mouse_x = x
             self.last_mouse_y = y
-            self.manager.on_mouse_press(x, y, button, modifiers)
+            return
+
+        if self.message_opened:
             return
 
         world_x, world_y, _ = self.world_camera.unproject((x, y))
-
         for prov in self.all_provinces:
             if prov.collides_with_point((world_x, world_y)):
-                with open("countries.json", "r", encoding="utf-8") as file:
-                    data = json.load(file)
-
-                    if prov.name not in data[self.country]["provinces"]:
-                        return
-
                 self.prov_name = prov.name
                 self.prov_resource = prov.resource
                 self.prov_center = (prov.center_x, prov.center_y)
 
-                self.close_province_message()
-                has_army = self.prov_center in self.army_positions
-                self.show_province_panel(has_army=has_army)
-                return
+                with open("countries.json", "r", encoding="utf-8") as file:
+                    data = json.load(file)
+                    if self.prov_name in data.get(self.country, {}).get("provinces", []):
+                        if self.prov_center in self.army_positions:
+                            self.show_prov_with_army()
+                        else:
+                            self.show_prov_without_army()
+                        self.world_camera.position = self.clamp_camera(
+                            prov.center_x, prov.center_y
+                        )
+                        return
 
-        self.manager.on_mouse_press(x, y, button, modifiers)
+    def on_draw(self):
+        self.clear()
+
+        self.world_camera.use()
+        self.background.draw()
+        self.all_provinces.draw()
+        for pos in self.army_positions:
+            arcade.draw_circle_filled(pos[0], pos[1], 25, arcade.color.BLUE)
+
+        self.gui_camera.use()
+        self.manager.draw()
 
     def on_key_press(self, symbol, modifiers):
         if symbol in self.keys:
@@ -406,33 +295,3 @@ class Game(arcade.View):
         y = max(bottom, min(top, y))
 
         return x, y
-
-    def on_update(self, delta_time: float):
-        if self.dragging:
-            return
-
-        x, y = self.world_camera.position
-
-        if self.keys[arcade.key.W]:
-            y += self.pan_speed
-        if self.keys[arcade.key.S]:
-            y -= self.pan_speed
-        if self.keys[arcade.key.A]:
-            x -= self.pan_speed
-        if self.keys[arcade.key.D]:
-            x += self.pan_speed
-
-        x, y = self.clamp_camera(x, y)
-        self.world_camera.position = (x, y)
-
-    def on_draw(self):
-        self.clear()
-
-        self.world_camera.use()
-        self.background.draw()
-        self.all_provinces.draw()
-        for pos in self.army_positions:
-            arcade.draw_circle_filled(pos[0], pos[1], 25, arcade.color.BLUE)
-
-        self.gui_camera.use()
-        self.manager.draw()
