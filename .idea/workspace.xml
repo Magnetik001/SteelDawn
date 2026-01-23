@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="0.0.2">
+    <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="Изменил дизайн окон + добавил ресурсы всем провинция (ветка без Маши)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/countries.json" beforeDir="false" afterPath="$PROJECT_DIR$/countries.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/country.py" beforeDir="false" afterPath="$PROJECT_DIR$/country.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,23 +50,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.game.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.menu.executor&quot;: &quot;Run&quot;,
-    &quot;Python.province.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/alex/PycharmProjects/SteelDawn&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.game.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.menu.executor": "Run",
+    "Python.province.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Егор/PycharmProjects/SteelDawn/images/textures"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Егор\PycharmProjects\SteelDawn\images\textures" />
       <recent name="C:\Users\alex\PycharmProjects\SteelDawn" />
       <recent name="C:\Users\alex\PycharmProjects\SteelDawn\images\backgrounds" />
       <recent name="C:\Users\alex\PycharmProjects\SteelDawn\images\backgrouns" />
@@ -180,7 +184,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769170147128</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Изменил дизайн окон + добавил ресурсы всем провинция (ветка без Маши)">
+      <option name="closed" value="true" />
+      <created>1769172100346</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1769172100346</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -188,7 +200,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/2" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -200,6 +224,7 @@
     <MESSAGE value="0.0.1 new please" />
     <MESSAGE value="0.0.2" />
     <MESSAGE value="Изменил дизайн окон + добавил ресурсы всем провинциям" />
-    <option name="LAST_COMMIT_MESSAGE" value="Изменил дизайн окон + добавил ресурсы всем провинциям" />
+    <MESSAGE value="Изменил дизайн окон + добавил ресурсы всем провинция (ветка без Маши)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Изменил дизайн окон + добавил ресурсы всем провинция (ветка без Маши)" />
   </component>
 </project>

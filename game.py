@@ -10,11 +10,40 @@ class Game(arcade.View):
     def __init__(self, year: int, country: str):
         super().__init__()
 
-        self.army_positions = []
-        self.province_panel = False
-
         self.year = year
         self.country = country
+
+        self.army_positions = []
+        self.all_provinces = arcade.SpriteList()
+        self.background = arcade.SpriteList()
+
+        bg = arcade.Sprite("images/backgrounds/map.png")
+        bg.center_x = bg.width // 2
+        bg.center_y = bg.height // 2
+        self.background.append(bg)
+        bg_sprite = self.background[0]
+        self.map_width = bg_sprite.width
+        self.map_height = bg_sprite.height
+        self.map_center_x = bg_sprite.center_x
+        self.map_center_y = bg_sprite.center_y
+
+        self.manager = None
+        self.message_box = None
+        self.province_panel = False
+
+        self.dragging = False
+
+        self.last_mouse_x = 0
+        self.last_mouse_y = 0
+
+        self.min_zoom = 0.3
+        self.max_zoom = 3.0
+
+        self.pan_speed = 20.0
+        self.keys = {key: False for key in (arcade.key.W,
+                                            arcade.key.S,
+                                            arcade.key.A,
+                                            arcade.key.D)}
 
         self.world_camera = arcade.camera.Camera2D()
         self.gui_camera = arcade.camera.Camera2D()
@@ -31,35 +60,6 @@ class Game(arcade.View):
                     provinces_data[cap_key]["center_x"],
                     provinces_data[cap_key]["center_y"]
                 )
-
-        self.all_provinces = arcade.SpriteList()
-        self.background = arcade.SpriteList()
-        bg = arcade.Sprite("images/backgrounds/map.png")
-        bg.center_x = bg.width // 2
-        bg.center_y = bg.height // 2
-        self.background.append(bg)
-
-        bg_sprite = self.background[0]
-        self.map_width = bg_sprite.width
-        self.map_height = bg_sprite.height
-        self.map_center_x = bg_sprite.center_x
-        self.map_center_y = bg_sprite.center_y
-
-        self.pan_speed = 20.0
-        self.keys = {key: False for key in (arcade.key.W,
-                                            arcade.key.S,
-                                            arcade.key.A,
-                                            arcade.key.D)}
-
-        self.dragging = False
-        self.last_mouse_x = 0
-        self.last_mouse_y = 0
-
-        self.manager = None
-        self.message_box = None
-
-        self.min_zoom = 0.3
-        self.max_zoom = 3.0
 
     #     self.country_overview()
     #
@@ -97,8 +97,8 @@ class Game(arcade.View):
         self.manager = UIManager()
         self.manager.enable()
 
-        self.country_button = UIFlatButton(text="Статистика", width=120, height=40)
-        self.country_button.on_click = lambda e: self.country_statistic()
+        self.country_button = UIFlatButton(text="Статистика", width=130, height=50)
+        self.country_button.on_click = lambda e: self.country_statistic_panel()
 
         self.country_button_container = UIAnchorLayout()
         self.country_button_container.add(
@@ -109,6 +109,62 @@ class Game(arcade.View):
             align_y=-10
         )
         self.manager.add(self.country_button_container)
+
+        self.economics_button = UIFlatButton(text="Экономика", width=130, height=50)
+        self.economics_button.on_click = lambda e: self.economic_panel()
+
+        self.economics_button_container = UIAnchorLayout()
+        self.economics_button_container.add(
+            self.economics_button,
+            anchor_x="left",
+            anchor_y="top",
+            align_x=150,
+            align_y=-10
+        )
+
+        self.manager.add(self.economics_button_container)
+
+        self.tech_button = UIFlatButton(text="Технологии", width=130, height=50)
+        self.tech_button.on_click = lambda e: self.new_turn()
+
+        self.tech_button_container = UIAnchorLayout()
+        self.tech_button_container.add(
+            self.tech_button,
+            anchor_x="left",
+            anchor_y="top",
+            align_x=290,
+            align_y=-10
+        )
+
+        self.manager.add(self.tech_button_container)
+
+        self.new_turn_button = UIFlatButton(text="Новый ход", width=150, height=75)
+        self.new_turn_button.on_click = lambda e: self.new_turn()
+
+        self.new_turn_button_container = UIAnchorLayout()
+        self.new_turn_button_container.add(
+            self.new_turn_button,
+            anchor_x="right",
+            anchor_y="bottom",
+            align_x=-25,
+            align_y=25
+        )
+
+        self.manager.add(self.new_turn_button_container)
+
+        self.exit_button = UIFlatButton(text="Выход", width=150, height=50)
+        self.exit_button.on_click = lambda e: self.new_turn()
+
+        self.exit_button_container = UIAnchorLayout()
+        self.exit_button_container.add(
+            self.exit_button,
+            anchor_x="right",
+            anchor_y="top",
+            align_x=-10,
+            align_y=-10
+        )
+
+        self.manager.add(self.exit_button_container)
 
     def show_province_panel(self, has_army: bool):
         if self.province_panel:
@@ -185,12 +241,11 @@ class Game(arcade.View):
         self.message_box = anchor
         self.manager.add(anchor)
 
-    def country_statistic(self):
-        if getattr(self, 'country_panel_opened', False):
-            return
-
+    def country_statistic_panel(self):
         self.country_panel_opened = True
         self.manager.remove(self.country_button_container)
+        self.manager.remove(self.economics_button_container)
+        self.manager.remove(self.tech_button_container)
 
         with open("countries.json", mode="r", encoding="UTF-8") as file:
             data = json.load(file)
@@ -252,7 +307,7 @@ class Game(arcade.View):
         for prov in provinces:
             prov_len = len(prov)
             added_length = prov_len + (2 if current_line else 0)
-            if current_length + added_length > 40 and current_line:
+            if current_length + added_length > 60 and current_line:
                 line_text = ", ".join(current_line)
                 label = UILabel(text=line_text, width=280, align="left")
                 label.style = {
@@ -304,6 +359,64 @@ class Game(arcade.View):
         self.country_panel = anchor
         self.manager.add(anchor)
 
+    def economic_panel(self):
+        self.country_panel_opened = True
+        self.manager.remove(self.country_button_container)
+        self.manager.remove(self.economics_button_container)
+        self.manager.remove(self.tech_button_container)
+
+        panel = UIBoxLayout(vertical=True, space_between=10)
+        panel.with_padding(top=14, bottom=14, left=16, right=16)
+        panel.with_background(color=(28, 30, 34, 230))
+        panel.style = {
+            "border_color": (85, 90, 100),
+            "border_width": 2
+        }
+
+        text1 = UILabel("На складах:")
+        text1.style = {
+            "normal": {
+                "font_size": 20,
+                "text_color": (240, 240, 240)
+            }
+        }
+
+        panel.add(text1)
+
+        with open("countries.json", mode="r", encoding="utf-8") as file:
+            data = json.load(file)
+            wheat = data[self.country]["wheat"]
+            metal = data[self.country]["metal"]
+            wood = data[self.country]["wood"]
+            coal = data[self.country]["coal"]
+            oil = data[self.country]["oil"]
+
+
+        wheat_label = UILabel(text=f"Пшеница: {str(wheat)}", align="left")
+        metal_label = UILabel(text=f"Металл: {str(metal)}", align="left")
+        wood_label = UILabel(text=f"Дерево: {str(wood)}", align="left")
+        coal_label = UILabel(text=f"Уголь: {str(coal)}", align="left")
+        oil_label = UILabel(text=f"Нефть: {str(oil)}", align="left")
+
+        for i in wheat_label, metal_label, wood_label, coal_label, oil_label:
+            panel.add(i)
+
+
+        anchor = UIAnchorLayout()
+        anchor.add(
+            panel,
+            anchor_x="left",
+            anchor_y="top",
+            align_x=15,
+            align_y=-15
+        )
+
+        self.economics_panel = anchor
+        self.manager.add(anchor)
+
+    def new_turn(self):
+        ...
+
     def buy_army(self):
         if self.prov_center not in self.army_positions:
             self.army_positions.append(self.prov_center)
@@ -323,6 +436,8 @@ class Game(arcade.View):
             self.manager.remove(self.country_panel)
             self.country_panel = None
         self.manager.add(self.country_button_container)
+        self.manager.add(self.economics_button_container)
+        self.manager.add(self.tech_button_container)
         self.country_panel_opened = False
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):

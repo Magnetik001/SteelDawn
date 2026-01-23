@@ -1,5 +1,5 @@
 import arcade
-from arcade.gui import UIManager, UIFlatButton, UIAnchorLayout, UIBoxLayout
+from arcade.gui import UIManager, UIFlatButton, UIAnchorLayout, UIBoxLayout, UIImage
 import game
 
 SCREEN_WIDTH = 1920
@@ -7,13 +7,19 @@ SCREEN_HEIGHT = 1080
 
 COUNTRIES_BY_YEAR = {
     1938: [
-        "Германия", "СССР", "Великобритания", "Франция", "Италия",
+        "Германия", "СССР", "Британия", "Франция", "Италия",
         "Польша", "Чехословакия", "Испания", "Турция", "Швеция",
-        "Румыния", "Венгрия", "Югославия", "Греция"
+        "Румыния", "Венгрия", "Югославия", "Греция", "Бельгия",
+        "Нидерланды", "Дания", "Норвегия", "Финляндия", "Португалия",
+        "Швейцария", "Ирландия", "Болгария", "Австрия", "Литва",
+        "Латвия", "Эстония"
     ],
     1941: [
-        "Германия", "СССР", "Великобритания", "Италия",
-        "Венгрия", "Румыния", "Финляндия"
+        "Германия", "СССР", "Британия", "Италия", "Словакия",
+        "Франция Виши", "Свободная Франция", "Хорватия",
+        "Венгрия", "Румыния", "Болгария", "Финляндия",
+        "Швеция", "Швейцария", "Португалия", "Испания", "Турция",
+        "Ирландия"
     ]
 }
 
@@ -29,7 +35,15 @@ class Menu(arcade.View):
         arcade.set_background_color(BG)
 
     def on_show_view(self):
-        self.manager = UIManager(self.window)
+        # Всегда пересоздаём GUI при входе в меню
+        self.setup_gui()
+
+    def setup_gui(self):
+        # Удаляем старый менеджер, если есть
+        if hasattr(self, 'manager'):
+            self.manager.disable()
+
+        self.manager = UIManager()
         self.manager.enable()
 
         self.root = UIAnchorLayout()
@@ -54,13 +68,13 @@ class Menu(arcade.View):
         }
 
         b1938 = UIFlatButton(
-            text="НАЧАТЬ КАМПАНИЮ 1938",
+            text="> НАЧАТЬ КАМПАНИЮ 1938",
             width=520,
             height=56,
             style=style
         )
         b1941 = UIFlatButton(
-            text="НАЧАТЬ КАМПАНИЮ 1941",
+            text="> НАЧАТЬ КАМПАНИЮ 1941",
             width=520,
             height=56,
             style=style
@@ -83,8 +97,8 @@ class Menu(arcade.View):
 
         arcade.draw_text(
             "STEEL DAWN",
-            SCREEN_WIDTH // 2,
-            SCREEN_HEIGHT - 150,
+            self.window.width // 2,
+            self.window.height - 150,
             DARK,
             72,
             anchor_x="center",
@@ -93,8 +107,8 @@ class Menu(arcade.View):
 
         arcade.draw_text(
             "ВОЕННО-СТРАТЕГИЧЕСКИЙ СИМУЛЯТОР АЛЬТЕРНАТИВНОЙ ИСТОРИИ",
-            SCREEN_WIDTH // 2,
-            SCREEN_HEIGHT - 220,
+            self.window.width // 2,
+            self.window.height - 220,
             MID,
             20,
             anchor_x="center",
@@ -102,10 +116,10 @@ class Menu(arcade.View):
         )
 
         arcade.draw_lrbt_rectangle_outline(
-            left=SCREEN_WIDTH // 2 - 350,
-            right=SCREEN_WIDTH // 2 + 350,
-            top=SCREEN_HEIGHT // 2 + 160,
-            bottom=SCREEN_HEIGHT // 2 - 160,
+            left=self.window.width // 2 - 300,
+            right=self.window.width // 2 + 300,
+            top=self.window.height // 2 + 110,
+            bottom=self.window.height // 2 - 110,
             color=(180, 180, 180),
             border_width=1
         )
@@ -122,16 +136,16 @@ class CountrySelectionView(arcade.View):
         arcade.set_background_color(BG)
 
     def on_show_view(self):
-        self.manager = UIManager(self.window)
-        self.manager.enable()
+        self.setup_gui()
 
-        self.root = UIAnchorLayout()
-        self.box = UIBoxLayout(vertical=True, space_between=12)
+    def setup_gui(self):
+        self.manager = UIManager()
+        self.manager.enable()
 
         style = {
             "normal": {
                 "font_name": ("Courier New",),
-                "font_size": 26,
+                "font_size": 18,
                 "font_color": DARK,
                 "bg": (0, 0, 0, 0),
                 "border": 0
@@ -146,28 +160,45 @@ class CountrySelectionView(arcade.View):
             }
         }
 
-        for c in self.countries:
-            b = UIFlatButton(
-                text=f"> {c.upper()}",
-                width=640,
-                height=36,
+        num_cols = 6
+        columns = [UIBoxLayout(vertical=True, space_between=10) for _ in range(num_cols)]
+
+        for i, country in enumerate(self.countries):
+            flag_path = f"flags/{country}.png"
+            texture = arcade.load_texture(flag_path)
+            flag_widget = UIImage(texture=texture, width=120, height=75)
+
+            btn = UIFlatButton(
+                text=f"> {country.upper()}",
+                width=220,
+                height=30,
                 style=style
             )
-            b.on_click = lambda e, country=c: self.window.show_view(game.Game(self.year, country))
-            self.box.add(b)
+            btn.on_click = lambda e, c=country: self.window.show_view(game.Game(self.year, c))
 
-        back = UIFlatButton(
-            text="< ВЕРНУТЬСЯ",
-            width=300,
-            height=34,
+            country_block = UIBoxLayout(vertical=True, space_between=5)
+            country_block.add(flag_widget)
+            country_block.add(btn)
+
+            columns[i % num_cols].add(country_block)
+
+        cols_row = UIBoxLayout(vertical=False, space_between=5, align="top")
+        for col in columns:
+            cols_row.add(col)
+
+        back_button = UIFlatButton(
+            text="< НАЗАД",
+            width=200,
+            height=30,
             style=style
         )
+        back_button.on_click = lambda e: self.window.show_view(Menu())
 
-        back.on_click = lambda e: self.window.show_view(Menu())
-        self.box.add(back)
+        root = UIAnchorLayout()
+        root.add(cols_row, anchor_x="center", anchor_y="top", align_y=-130)
+        root.add(back_button, anchor_x="left", anchor_y="top", align_x=20, align_y=-20)
 
-        self.root.add(self.box, anchor_x="center", anchor_y="center")
-        self.manager.add(self.root)
+        self.manager.add(root)
 
     def on_hide_view(self):
         self.manager.disable()
@@ -177,22 +208,13 @@ class CountrySelectionView(arcade.View):
 
         arcade.draw_text(
             str(self.year),
-            SCREEN_WIDTH // 2,
-            SCREEN_HEIGHT - 80,
+            self.window.width // 2,
+            self.window.height - 80,
             (200, 200, 200),
             46,
             anchor_x="center",
             font_name=("Courier New",),
             bold=True
-        )
-
-        arcade.draw_lrbt_rectangle_outline(
-            left=SCREEN_WIDTH // 2 - 410,
-            right=SCREEN_WIDTH // 2 + 410,
-            top=SCREEN_HEIGHT // 2 + 390,
-            bottom=SCREEN_HEIGHT // 2 - 390,
-            color=(180, 180, 180),
-            border_width=1
         )
 
         self.manager.draw()
