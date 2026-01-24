@@ -4,6 +4,7 @@ import json
 from collections import Counter
 
 import province
+import menu
 
 
 class Game(arcade.View):
@@ -179,7 +180,7 @@ class Game(arcade.View):
         self.manager.add(self.new_turn_button_container)
 
         self.exit_button = UIFlatButton(text="Выход", width=150, height=50)
-        self.exit_button.on_click = lambda e: self.new_turn()
+        self.exit_button.on_click = lambda e: self.exit()
 
         self.exit_button_container = UIAnchorLayout()
         self.exit_button_container.add(
@@ -210,11 +211,25 @@ class Game(arcade.View):
 
         divider2 = UILabel(text="─" * 30)
 
+        with open("provinces.json", mode="r", encoding="utf-8") as provinces_file:
+            data = json.load(provinces_file)
+            level = str(data[self.prov_name]["level"])
+
+        row = UIBoxLayout(vertical=False, space_between=10)
+
+        level_label = UILabel(text=f"Уровень провинции: {level}", width=280, align="left")
+        level_button = UIFlatButton(text="+", width=35, height=35)
+
+        row.add(level_label)
+        row.add(level_button)
+
+        divider3 = UILabel(text="─" * 30)
+
         if has_army:
             button_text = "Переместить армию"
             on_click_action = self.move_army
         else:
-            button_text = "Купить армию"
+            button_text = "Тренировать войска"
             on_click_action = self.buy_army
 
         action_button = UIFlatButton(text=button_text, width=260, height=40)
@@ -223,7 +238,7 @@ class Game(arcade.View):
         close_button = UIFlatButton(text="Закрыть", width=260, height=36)
         close_button.on_click = lambda e: self.close_province_message()
 
-        for widget in [title, divider1, resource_label, army_label, divider2, action_button, close_button]:
+        for widget in [title, divider1, resource_label, army_label, divider2, row, divider3, action_button, close_button]:
             panel.add(widget)
 
         anchor = UIAnchorLayout()
@@ -353,12 +368,34 @@ class Game(arcade.View):
         text2 = UILabel(text="Провинции с ресурсами:", align="left")
         panel.add(text2)
 
-        with open(f"countries.json", mode="r", encoding="utf-8") as file:
+        with open("countries.json", mode="r", encoding="utf-8") as file:
             data = json.load(file)
             for i in range(len(data[self.country]["resources"])):
                 if data[self.country]["resources"][i] != "-":
-                    prov_res_label = UILabel(text=f"{data[self.country]['provinces'][i]} - {data[self.country]['resources'][i]}", align="left")
-                    panel.add(prov_res_label)
+                    row = UIBoxLayout(vertical=False, space_between=10)
+
+                    prov_name = data[self.country]["provinces"][i]
+                    resource = data[self.country]["resources"][i]
+
+                    prov_label = UILabel(
+                        text=f"{prov_name} - {resource}",
+                        align="left",
+                        width=200
+                    )
+
+                    action_button = UIFlatButton(
+                        text="▶",
+                        width=35,
+                        height=35
+                    )
+
+                    action_button.on_click = (
+                        lambda e, name=prov_name: self.go_to_province(name)
+                    )
+
+                    row.add(prov_label)
+                    row.add(action_button)
+                    panel.add(row)
 
         divider1 = UILabel("─" * 34)
         panel.add(divider1)
@@ -379,6 +416,23 @@ class Game(arcade.View):
 
         self.economics_panel = anchor
         self.manager.add(anchor)
+
+    def exit(self):
+        self.window.show_view(menu.Menu())
+
+    def go_to_province(self, name):
+        self.close_province_message()
+        self.prov_name = name
+        with open("provinces.json", mode="r", encoding="utf-8") as file:
+            data = json.load(file)
+            self.prov_center = (data[name]["center_x"], data[name]["center_y"])
+            self.prov_resource = data[name]["resource"]
+            self.world_camera.position = self.prov_center
+            if self.prov_center in self.army_positions:
+                has_army = True
+            else:
+                has_army = False
+            self.show_province_panel(has_army)
 
     def new_turn(self):
         with open(f"countries.json", mode="r", encoding="utf-8") as country_file,\
@@ -468,7 +522,7 @@ class Game(arcade.View):
 
                 self.close_province_message()
                 has_army = self.prov_center in self.army_positions
-                self.show_province_panel(has_army=has_army)
+                self.show_province_panel(has_army)
                 return
 
         self.manager.on_mouse_press(x, y, button, modifiers)

@@ -7,7 +7,8 @@ import menu
 
 class MainWindow(arcade.Window):
     def __init__(self):
-        super().__init__(1920, 1080, "Steel Dawn")
+        screen_width, screen_height = arcade.get_display_size()
+        super().__init__(screen_width, screen_height, "Steel Dawn", fullscreen=True)
         self.player = None
         self.music_files = [
             "Andreas_Waldetoft_-_Morning_Of_D_Day_72081712",
@@ -41,6 +42,10 @@ class MainWindow(arcade.Window):
             self.play_random_music()
 
         self.player.push_handlers(on_eos=on_eos)
+
+    def on_key_press(self, key, modifiers):
+        if key == arcade.key.F:
+            self.set_fullscreen(not self.fullscreen)
 
 
 if __name__ == "__main__":

@@ -35,11 +35,9 @@ class Menu(arcade.View):
         arcade.set_background_color(BG)
 
     def on_show_view(self):
-        # Всегда пересоздаём GUI при входе в меню
         self.setup_gui()
 
     def setup_gui(self):
-        # Удаляем старый менеджер, если есть
         if hasattr(self, 'manager'):
             self.manager.disable()
 
@@ -80,14 +78,25 @@ class Menu(arcade.View):
             style=style
         )
 
+        bExit = UIFlatButton(
+            x = 10,
+            y = 10,
+            text="Выход",
+            width=250,
+            height=75,
+            style=style
+        )
+
         b1938.on_click = lambda e: self.window.show_view(CountrySelectionView(1938))
         b1941.on_click = lambda e: self.window.show_view(CountrySelectionView(1941))
+        bExit.on_click = lambda e: arcade.exit()
 
         self.box.add(b1938)
         self.box.add(b1941)
 
         self.root.add(self.box, anchor_x="center", anchor_y="center")
         self.manager.add(self.root)
+        self.manager.add(bExit)
 
     def on_hide_view(self):
         self.manager.disable()
