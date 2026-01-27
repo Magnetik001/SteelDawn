@@ -363,11 +363,11 @@
             "щецин"
         ],
         "capital": "Берлин",
-        "wheat": 0,
-        "metal": 0,
-        "wood": 0,
-        "coal": 0,
-        "oil": 0
+        "wheat": 2,
+        "metal": 3,
+        "wood": 2,
+        "coal": 1,
+        "oil": 1
     },
     "Швейцария": {
         "color": [
