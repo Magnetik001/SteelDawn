@@ -60,8 +60,8 @@ class Game(arcade.View):
         self.world_camera = arcade.camera.Camera2D()
         self.gui_camera = arcade.camera.Camera2D()
 
-        with open("provinces.json", "r", encoding="utf-8") as provinces_file, \
-             open("countries.json", "r", encoding="utf-8") as countries_file:
+        with open(f"provinces{self.year}.json", "r", encoding="utf-8") as provinces_file, \
+             open(f"countries{self.year}.json", "r", encoding="utf-8") as countries_file:
             provinces_data = json.load(provinces_file)
             countries_data = json.load(countries_file)
 
@@ -75,22 +75,22 @@ class Game(arcade.View):
 
         self.overview()
     def overview(self):
-    #     with (open("provinces.json", "r", encoding="utf-8") as provinces_file,
-    #         open("countries.json", "r", encoding="utf-8") as countries_file):
-    #         provinces_data = json.load(provinces_file)
-    #         countries_data = json.load(countries_file)
-    #
-    #         for country_name in countries_data:
-    #             for prov_name in provinces_data:
-    #                 if provinces_data[prov_name]["color"] == countries_data[country_name]["color"]:
-    #                     countries_data[country_name]["resources"].append(provinces_data[prov_name]["resource"])
-    #                     countries_data[country_name]["provinces"].append(prov_name)
-    #
-    #     with open("countries.json", "w", encoding="utf-8") as countries_file:
-    #         json.dump(countries_data, countries_file, ensure_ascii=False, indent=4)
-    #
-        with (open("provinces.json", "r", encoding="utf-8") as f,
-              open("countries.json", "r", encoding="utf-8") as c):
+        with (open(f"provinces{self.year}.json", "r", encoding="utf-8") as provinces_file,
+            open(f"countries{self.year}.json", "r", encoding="utf-8") as countries_file):
+            provinces_data = json.load(provinces_file)
+            countries_data = json.load(countries_file)
+
+            for country_name in countries_data:
+                for prov_name in provinces_data:
+                    if provinces_data[prov_name]["color"] == countries_data[country_name]["color"]:
+                        countries_data[country_name]["resources"].append(provinces_data[prov_name]["resource"])
+                        countries_data[country_name]["provinces"].append(prov_name)
+
+        with open(f"countries{self.year}.json", "w", encoding="utf-8") as countries_file:
+            json.dump(countries_data, countries_file, ensure_ascii=False, indent=4)
+
+        with (open(f"provinces{self.year}.json", "r", encoding="utf-8") as f,
+              open(f"countries{self.year}.json", "r", encoding="utf-8") as c):
             province_data = json.load(f)
             countries_data = json.load(c)
 
@@ -104,8 +104,8 @@ class Game(arcade.View):
             country["coal"] = 0
             country["oil"] = 0
 
-        with (open("provinces.json", "w", encoding="utf-8") as f,
-              open("countries.json", "w", encoding="utf-8") as c):
+        with (open(f"provinces{self.year}.json", "w", encoding="utf-8") as f,
+              open(f"countries{self.year}.json", "w", encoding="utf-8") as c):
             json.dump(province_data, f, ensure_ascii=False, indent=4)
             json.dump(countries_data, c, ensure_ascii=False, indent=4)
 
@@ -113,7 +113,7 @@ class Game(arcade.View):
     def on_show_view(self):
         arcade.set_background_color((42, 44, 44))
 
-        with open("provinces.json", "r", encoding="utf-8") as file:
+        with open(f"provinces{self.year}.json", "r", encoding="utf-8") as file:
             data = json.load(file)
             for name in data:
                 prov = province.Province(
@@ -216,7 +216,7 @@ class Game(arcade.View):
 
         divider2 = UILabel(text="─" * 30)
 
-        with open("provinces.json", mode="r", encoding="utf-8") as provinces_file:
+        with open(f"provinces{self.year}.json", mode="r", encoding="utf-8") as provinces_file:
             data = json.load(provinces_file)
             level = str(data[self.prov_name]["level"])
 
@@ -264,7 +264,7 @@ class Game(arcade.View):
         self.manager.remove(self.economics_button_container)
         self.manager.remove(self.tech_button_container)
 
-        with open("countries.json", mode="r", encoding="UTF-8") as file:
+        with open(f"countries{self.year}.json", mode="r", encoding="UTF-8") as file:
             data = json.load(file)
             provinces = data[self.country]["provinces"]
             resources = dict(Counter(data[self.country]["resources"]))
@@ -349,7 +349,7 @@ class Game(arcade.View):
         text1 = UILabel("На складах:")
         panel.add(text1)
 
-        with open("countries.json", mode="r", encoding="utf-8") as file:
+        with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file:
             data = json.load(file)
             wheat = data[self.country]["wheat"]
             metal = data[self.country]["metal"]
@@ -373,7 +373,7 @@ class Game(arcade.View):
         text2 = UILabel(text="Провинции с ресурсами:", align="left")
         panel.add(text2)
 
-        with open("countries.json", mode="r", encoding="utf-8") as file:
+        with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file:
             data = json.load(file)
             for i in range(len(data[self.country]["resources"])):
                 if data[self.country]["resources"][i] != "-":
@@ -428,7 +428,7 @@ class Game(arcade.View):
     def go_to_province(self, name):
         self.close_province_message()
         self.prov_name = name
-        with open("provinces.json", mode="r", encoding="utf-8") as file:
+        with open(f"provinces{self.year}.json", mode="r", encoding="utf-8") as file:
             data = json.load(file)
             self.prov_center = (data[name]["center_x"], data[name]["center_y"])
             self.prov_resource = data[name]["resource"]
@@ -440,8 +440,8 @@ class Game(arcade.View):
             self.show_province_panel(has_army)
 
     def new_turn(self):
-        with open(f"countries.json", mode="r", encoding="utf-8") as country_file,\
-            open(f"provinces.json", mode="r", encoding="utf-8") as provinces_file:
+        with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as country_file,\
+            open(f"provinces{self.year}.json", mode="r", encoding="utf-8") as provinces_file:
             country_data = json.load(country_file)
             provinces_data = json.load(provinces_file)
 
@@ -469,19 +469,19 @@ class Game(arcade.View):
                 country_data[self.country]["oil"] = 0
 
 
-        with open("countries.json", mode="w", encoding="utf-8") as file:
+        with open(f"countries{self.year}.json", mode="w", encoding="utf-8") as file:
             json.dump(country_data, file, ensure_ascii=False, indent=4)
 
     def buy_army(self):
         if self.prov_center not in self.army_positions:
-            with open("countries.json", mode="r", encoding="utf-8") as file:
+            with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file:
                 data = json.load(file)
                 if data[self.country]["wheat"] - 1 >= 0 and data[self.country]["metal"] - 1 >= 0:
                     self.army_positions.append(self.prov_center)
                     data[self.country]["wheat"] -= 1
                     data[self.country]["metal"] -= 1
 
-                    with open(f"countries.json", mode="w", encoding="utf-8") as file:
+                    with open(f"countries{self.year}.json", mode="w", encoding="utf-8") as file:
                         json.dump(data, file, ensure_ascii=False, indent=4)
 
     def move_army(self):
@@ -504,14 +504,14 @@ class Game(arcade.View):
 
     def moving_to(self):
         if self.prov_center not in self.army_positions:
-            with open("countries.json", mode="r", encoding="utf-8") as file:
+            with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file:
                 data = json.load(file)
                 if data[self.country]["wheat"] - 1 >= 0 and data[self.country]["metal"] - 1 >= 0:
                     self.army_positions.append(self.prov_center)
                     data[self.country]["wheat"] -= 1
                     data[self.country]["metal"] -= 1
 
-                    with open(f"countries.json", mode="w", encoding="utf-8") as file:
+                    with open(f"countries{self.year}.json", mode="w", encoding="utf-8") as file:
                         json.dump(data, file, ensure_ascii=False, indent=4)
                 else:
                     choice = UILabel(text="Не хватает ресурсов!", text_color=(40, 40, 40), width=300)
@@ -561,7 +561,7 @@ class Game(arcade.View):
                 if self.moving:
                     self.manager.remove(self.move_anchor)
                     self.moving_to()
-                with open("countries.json", "r", encoding="utf-8") as file:
+                with open(f"countries{self.year}.json", "r", encoding="utf-8") as file:
                     data = json.load(file)
 
                     if prov.name not in data[self.country]["provinces"]:
