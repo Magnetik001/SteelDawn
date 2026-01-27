@@ -364,9 +364,9 @@
         ],
         "capital": "Берлин",
         "wheat": 0,
-        "metal": 0,
-        "wood": 0,
-        "coal": 0,
+        "metal": 4,
+        "wood": 4,
+        "coal": 2,
         "oil": 0
     },
     "Швейцария": {

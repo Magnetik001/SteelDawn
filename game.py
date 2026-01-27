@@ -11,6 +11,7 @@ class Game(arcade.View):
     def __init__(self, year: int, country: str):
         super().__init__()
 
+        self.moving = False
         self.prov_center = ""
         self.moving_army = False
         self.prov_name = ""
@@ -484,10 +485,50 @@ class Game(arcade.View):
                         json.dump(data, file, ensure_ascii=False, indent=4)
 
     def move_army(self):
+        self.moving = True
+        self.army_positions.append(self.prov_center)
+        choice = UILabel(text="Выберите провинцию", text_color=(40, 40, 40), width=300)
+        panel = UIBoxLayout(vertical=True, space_between=10)
+        panel.with_padding(top=14, bottom=14, left=16, right=16)
+        panel.with_background(color=(250, 250, 250, 230))
+        panel.add(choice)
+        self.move_anchor = UIAnchorLayout()
+        self.move_anchor.add(
+            panel,
+            anchor_x="left",
+            anchor_y="top",
+            align_x=15,
+            align_y=-650
+        )
+        self.manager.add(self.move_anchor)
+
+    def moving_to(self):
         if self.prov_center not in self.army_positions:
-            self.army_positions.append(self.prov_center)
-            choice = UILabel(text="Выберите провинцию")
-            self.panel.add(choice)
+            with open("countries.json", mode="r", encoding="utf-8") as file:
+                data = json.load(file)
+                if data[self.country]["wheat"] - 1 >= 0 and data[self.country]["metal"] - 1 >= 0:
+                    self.army_positions.append(self.prov_center)
+                    data[self.country]["wheat"] -= 1
+                    data[self.country]["metal"] -= 1
+
+                    with open(f"countries.json", mode="w", encoding="utf-8") as file:
+                        json.dump(data, file, ensure_ascii=False, indent=4)
+                else:
+                    choice = UILabel(text="Не хватает ресурсов!", text_color=(40, 40, 40), width=300)
+                    panel = UIBoxLayout(vertical=True, space_between=10)
+                    panel.with_padding(top=14, bottom=14, left=16, right=16)
+                    panel.with_background(color=(250, 250, 250, 230))
+                    panel.add(choice)
+                    self.move_anchor = UIAnchorLayout()
+                    self.move_anchor.add(
+                        panel,
+                        anchor_x="left",
+                        anchor_y="top",
+                        align_x=15,
+                        align_y=-650
+                    )
+                    self.manager.add(self.move_anchor)
+            self.moving = False
 
     def close_province_message(self):
         if self.province_panel is not None and self.manager:
@@ -516,11 +557,16 @@ class Game(arcade.View):
 
         for prov in self.all_provinces:
             if prov.collides_with_point((world_x, world_y)):
+
+                if self.moving:
+                    self.manager.remove(self.move_anchor)
+                    self.moving_to()
                 with open("countries.json", "r", encoding="utf-8") as file:
                     data = json.load(file)
 
                     if prov.name not in data[self.country]["provinces"]:
                         return
+
                 self.last_prov_name = self.prov_name
                 self.last_prov_centre = self.prov_center
 
