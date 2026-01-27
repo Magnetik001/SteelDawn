@@ -11,6 +11,10 @@ class Game(arcade.View):
     def __init__(self, year: int, country: str):
         super().__init__()
 
+        self.prov_center = ""
+        self.moving_army = False
+        self.prov_name = ""
+
         self.year = year
         self.country = country
 
@@ -196,9 +200,9 @@ class Game(arcade.View):
     def show_province_panel(self, has_army: bool):
         self.province_panel_opened = True
 
-        panel = UIBoxLayout(vertical=True, space_between=12)
-        panel.with_padding(top=15, bottom=15, left=15, right=15)
-        panel.with_background(color=(32, 35, 40, 220))
+        self.panel = UIBoxLayout(vertical=True, space_between=12)
+        self.panel.with_padding(top=15, bottom=15, left=15, right=15)
+        self.panel.with_background(color=(32, 35, 40, 220))
 
         title = UILabel(text=self.prov_name.upper(), width=280, align="left")
 
@@ -239,11 +243,11 @@ class Game(arcade.View):
         close_button.on_click = lambda e: self.close_province_message()
 
         for widget in [title, divider1, resource_label, army_label, divider2, row, divider3, action_button, close_button]:
-            panel.add(widget)
+            self.panel.add(widget)
 
         anchor = UIAnchorLayout()
         anchor.add(
-            panel,
+            self.panel,
             anchor_x="left",
             anchor_y="bottom",
             align_x=15,
@@ -482,6 +486,8 @@ class Game(arcade.View):
     def move_army(self):
         if self.prov_center not in self.army_positions:
             self.army_positions.append(self.prov_center)
+            choice = UILabel(text="Выберите провинцию")
+            self.panel.add(choice)
 
     def close_province_message(self):
         if self.province_panel is not None and self.manager:
@@ -515,6 +521,8 @@ class Game(arcade.View):
 
                     if prov.name not in data[self.country]["provinces"]:
                         return
+                self.last_prov_name = self.prov_name
+                self.last_prov_centre = self.prov_center
 
                 self.prov_name = prov.name
                 self.prov_resource = prov.resource
