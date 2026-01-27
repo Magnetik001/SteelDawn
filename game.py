@@ -498,36 +498,42 @@ class Game(arcade.View):
             anchor_x="left",
             anchor_y="top",
             align_x=15,
-            align_y=-650
+            align_y=-450
         )
         self.manager.add(self.move_anchor)
 
     def moving_to(self):
         if self.prov_center not in self.army_positions:
-            with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file:
+            with (open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file):
                 data = json.load(file)
-                if data[self.country]["wheat"] - 1 >= 0 and data[self.country]["metal"] - 1 >= 0:
-                    self.army_positions.append(self.prov_center)
-                    data[self.country]["wheat"] -= 1
-                    data[self.country]["metal"] -= 1
-
-                    with open(f"countries{self.year}.json", mode="w", encoding="utf-8") as file:
-                        json.dump(data, file, ensure_ascii=False, indent=4)
+                if data[self.country]["wheat"] > 0 and data[self.country]["metal"] > 0:
+                    if abs(self.prov_center[0] - self.last_prov_centre[0]) <= 200 and abs(self.prov_center[1] - self.last_prov_centre[1]) <= 200:
+                    
+                        self.army_positions.append(self.prov_center)
+                        while self.last_prov_centre in self.army_positions:
+                            del self.army_positions[self.army_positions.index(self.last_prov_centre)]
+                        
+                        data[self.country]["wheat"] -= 1
+                        data[self.country]["metal"] -= 1
+    
+                        with open(f"countries{self.year}.json", mode="w", encoding="utf-8") as file:
+                            json.dump(data, file, ensure_ascii=False, indent=4)
                 else:
-                    choice = UILabel(text="Не хватает ресурсов!", text_color=(40, 40, 40), width=300)
-                    panel = UIBoxLayout(vertical=True, space_between=10)
-                    panel.with_padding(top=14, bottom=14, left=16, right=16)
-                    panel.with_background(color=(250, 250, 250, 230))
-                    panel.add(choice)
-                    self.move_anchor = UIAnchorLayout()
-                    self.move_anchor.add(
-                        panel,
-                        anchor_x="left",
-                        anchor_y="top",
-                        align_x=15,
-                        align_y=-650
-                    )
-                    self.manager.add(self.move_anchor)
+                    # choice = UILabel(text="Не хватает ресурсов!", text_color=(40, 40, 40), width=300)
+                    # panel = UIBoxLayout(vertical=True, space_between=10)
+                    # panel.with_padding(top=14, bottom=14, left=16, right=16)
+                    # panel.with_background(color=(250, 250, 250, 230))
+                    # panel.add(choice)
+                    # self.moving_anchor = UIAnchorLayout()
+                    # self.moving_anchor.add(
+                    #     panel,
+                    #     anchor_x="left",
+                    #     anchor_y="top",
+                    #     align_x=15,
+                    #     align_y=-650
+                    # )
+                    # self.manager.add(self.moving_anchor)
+                    pass
             self.moving = False
 
     def close_province_message(self):
@@ -557,27 +563,30 @@ class Game(arcade.View):
 
         for prov in self.all_provinces:
             if prov.collides_with_point((world_x, world_y)):
-
-                if self.moving:
-                    self.manager.remove(self.move_anchor)
-                    self.moving_to()
-                with open(f"countries{self.year}.json", "r", encoding="utf-8") as file:
-                    data = json.load(file)
-
-                    if prov.name not in data[self.country]["provinces"]:
-                        return
-
+                
                 self.last_prov_name = self.prov_name
                 self.last_prov_centre = self.prov_center
 
                 self.prov_name = prov.name
                 self.prov_resource = prov.resource
                 self.prov_center = (prov.center_x, prov.center_y)
+                
+                with open(f"countries{self.year}.json", "r", encoding="utf-8") as file:
+                    data = json.load(file)
 
-                self.close_province_message()
-                has_army = self.prov_center in self.army_positions
-                self.show_province_panel(has_army)
+                    if prov.name in data[self.country]["provinces"] or self.prov_center in self.army_positions:
+
+                        self.close_province_message()
+                        has_army = self.prov_center in self.army_positions
+                        self.show_province_panel(has_army)
+
+                if self.moving:
+                    self.manager.remove(self.move_anchor)
+                    self.moving_to()
+                    
+
                 return
+
 
         self.manager.on_mouse_press(x, y, button, modifiers)
 
@@ -659,7 +668,12 @@ class Game(arcade.View):
         self.background.draw()
         self.all_provinces.draw()
         for pos in self.army_positions:
-            arcade.draw_circle_filled(pos[0], pos[1], 25, arcade.color.BLUE)
+            self.helmet = arcade.Sprite("images/шлем зеленый 3.png", scale=2)
+            self.helmet.center_x = pos[0]
+            self.helmet.center_y = pos[1]
+            self.helmet_list = arcade.SpriteList()
+            self.helmet_list.append(self.helmet)
+            self.helmet_list.draw()
 
         self.gui_camera.use()
         self.manager.draw()
