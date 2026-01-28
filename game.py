@@ -19,7 +19,7 @@ class Game(arcade.View):
         self.year = year
         self.country = country
 
-        self.army_positions = []
+        self.army_positions = {}
         self.all_provinces = arcade.SpriteList()
         self.background = arcade.SpriteList()
 
@@ -42,8 +42,11 @@ class Game(arcade.View):
         self.province_panel = None
         self.country_panel = None
         self.economics_panel = None
+        self.moving_anchor = None
 
         self.dragging = False
+
+        self.turn = 0
 
         self.last_mouse_x = 0
         self.last_mouse_y = 0
@@ -75,19 +78,19 @@ class Game(arcade.View):
 
         self.overview()
     def overview(self):
-        with (open(f"provinces{self.year}.json", "r", encoding="utf-8") as provinces_file,
-            open(f"countries{self.year}.json", "r", encoding="utf-8") as countries_file):
-            provinces_data = json.load(provinces_file)
-            countries_data = json.load(countries_file)
-
-            for country_name in countries_data:
-                for prov_name in provinces_data:
-                    if provinces_data[prov_name]["color"] == countries_data[country_name]["color"]:
-                        countries_data[country_name]["resources"].append(provinces_data[prov_name]["resource"])
-                        countries_data[country_name]["provinces"].append(prov_name)
-
-        with open(f"countries{self.year}.json", "w", encoding="utf-8") as countries_file:
-            json.dump(countries_data, countries_file, ensure_ascii=False, indent=4)
+        # with (open(f"provinces{self.year}.json", "r", encoding="utf-8") as provinces_file,
+        #     open(f"countries{self.year}.json", "r", encoding="utf-8") as countries_file):
+        #     provinces_data = json.load(provinces_file)
+        #     countries_data = json.load(countries_file)
+        #
+        #     for country_name in countries_data:
+        #         for prov_name in provinces_data:
+        #             if provinces_data[prov_name]["color"] == countries_data[country_name]["color"]:
+        #                 countries_data[country_name]["resources"].append(provinces_data[prov_name]["resource"])
+        #                 countries_data[country_name]["provinces"].append(prov_name)
+        #
+        # with open(f"countries{self.year}.json", "w", encoding="utf-8") as countries_file:
+        #     json.dump(countries_data, countries_file, ensure_ascii=False, indent=4)
 
         with (open(f"provinces{self.year}.json", "r", encoding="utf-8") as f,
               open(f"countries{self.year}.json", "r", encoding="utf-8") as c):
@@ -224,6 +227,7 @@ class Game(arcade.View):
 
         level_label = UILabel(text=f"Уровень провинции: {level}", width=280, align="left")
         level_button = UIFlatButton(text="+", width=35, height=35)
+        level_button.on_click = lambda e: self.level_up()
 
         row.add(level_label)
         row.add(level_button)
@@ -422,8 +426,104 @@ class Game(arcade.View):
         self.economics_panel = anchor
         self.manager.add(anchor)
 
+    def show_victory_window(self):
+        self.manager.clear()
+
+        with open(f"countries{self.year}.json", encoding="utf-8") as f:
+            data = json.load(f)[self.country]
+
+        panel = UIBoxLayout(vertical=True, space_between=12)
+        panel.with_padding(top=20, bottom=20, left=25, right=25)
+        panel.with_background(color=(25, 28, 32, 240))
+
+        title = UILabel(
+            text="ПОБЕДА",
+            font_size=28,
+            align="center",
+            text_color=(220, 220, 220)
+        )
+        panel.add(title)
+
+        country_label = UILabel(
+            text=f"Страна: {self.country}",
+            align="left"
+        )
+
+        turn_label = UILabel(
+            text=f"Ходов сыграно: {self.turn}",
+            align="left"
+        )
+
+        divider = UILabel("─" * 36)
+
+        res_label = UILabel("Ресурсы:", align="left")
+
+        resources = [
+            f"Пшеница: {data['wheat']}",
+            f"Металл: {data['metal']}",
+            f"Дерево: {data['wood']}",
+            f"Уголь: {data['coal']}",
+            f"Нефть: {data['oil']}"
+        ]
+
+        panel.add(res_label)
+        for r in resources:
+            panel.add(UILabel(text=r, align="left"))
+
+        panel.add(divider)
+
+        prov_title = UILabel("Провинции:", align="left")
+        panel.add(prov_title)
+
+        provinces = data["provinces"]
+        prov_text = ", ".join(provinces)
+
+        prov_label = UILabel(
+            text=prov_text,
+            width=600,
+            align="left"
+        )
+        panel.add(prov_label)
+
+        exit_button = UIFlatButton(
+            text="Выйти в меню",
+            width=240,
+            height=45
+        )
+        exit_button.on_click = lambda e: self.exit()
+
+        panel.add(country_label)
+        panel.add(turn_label)
+        panel.add(divider)
+        panel.add(exit_button)
+
+        anchor = UIAnchorLayout()
+        anchor.add(
+            panel,
+            anchor_x="center",
+            anchor_y="center"
+        )
+
+        self.manager.add(anchor)
+
     def exit(self):
         self.window.show_view(menu.Menu())
+
+    def level_up(self):
+        with (open(f"provinces{self.year}.json", mode="r", encoding="utf-8") as prov_file,
+              open(f'countries{self.year}.json', mode="r", encoding="utf-8") as country_file):
+            prov_data = json.load(prov_file)
+            country_data = json.load(country_file)
+            if (country_data[self.country]["wood"] >= 2 and country_data[self.country]["coal"] >= 2 and
+                    prov_data[self.prov_name]["level"] != 5):
+                country_data[self.country]["wood"] -= 2
+                country_data[self.country]["coal"] -= 2
+                prov_data[self.prov_name]["level"] += 1
+
+        with open(f"provinces{self.year}.json", mode="w", encoding="utf-8") as prov_file, \
+            open(f"countries{self.year}.json", mode="w", encoding="utf-8") as country_file:
+            json.dump(prov_data, prov_file, indent=4, ensure_ascii=False)
+            json.dump(country_data, country_file, indent=4, ensure_ascii=False)
 
     def go_to_province(self, name):
         self.close_province_message()
@@ -433,7 +533,7 @@ class Game(arcade.View):
             self.prov_center = (data[name]["center_x"], data[name]["center_y"])
             self.prov_resource = data[name]["resource"]
             self.world_camera.position = self.prov_center
-            if self.prov_center in self.army_positions:
+            if self.prov_center in self.army_positions.keys():
                 has_army = True
             else:
                 has_army = False
@@ -468,16 +568,30 @@ class Game(arcade.View):
             else:
                 country_data[self.country]["oil"] = 0
 
-
         with open(f"countries{self.year}.json", mode="w", encoding="utf-8") as file:
             json.dump(country_data, file, ensure_ascii=False, indent=4)
 
+        for i in self.army_positions.keys():
+            self.army_positions[i] = 0
+
+        self.turn += 1
+        self.result = 0
+        for i in self.all_provinces:
+            if i.color.r == country_data[self.country]["color"][0] and \
+                i.color.g == country_data[self.country]["color"][1] and \
+                i.color.b == country_data[self.country]["color"][2]:
+                self.result += 1
+        if self.result == 150:
+            self.show_victory_window()
+
+        self.close_help()
+
     def buy_army(self):
-        if self.prov_center not in self.army_positions:
+        if self.prov_center not in self.army_positions.keys():
             with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file:
                 data = json.load(file)
                 if data[self.country]["wheat"] - 1 >= 0 and data[self.country]["metal"] - 1 >= 0:
-                    self.army_positions.append(self.prov_center)
+                    self.army_positions[self.prov_center] = 0
                     data[self.country]["wheat"] -= 1
                     data[self.country]["metal"] -= 1
 
@@ -486,7 +600,6 @@ class Game(arcade.View):
 
     def move_army(self):
         self.moving = True
-        self.army_positions.append(self.prov_center)
         choice = UILabel(text="Выберите провинцию", text_color=(40, 40, 40), width=300)
         panel = UIBoxLayout(vertical=True, space_between=10)
         panel.with_padding(top=14, bottom=14, left=16, right=16)
@@ -503,38 +616,68 @@ class Game(arcade.View):
         self.manager.add(self.move_anchor)
 
     def moving_to(self):
-        if self.prov_center not in self.army_positions:
+        if self.prov_center not in self.army_positions.keys():
             with (open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file):
                 data = json.load(file)
-                if data[self.country]["wheat"] > 0 and data[self.country]["metal"] > 0:
-                    if abs(self.prov_center[0] - self.last_prov_centre[0]) <= 200 and abs(self.prov_center[1] - self.last_prov_centre[1]) <= 200:
-                    
-                        self.army_positions.append(self.prov_center)
+                if data[self.country]["wheat"] > 0 and data[self.country]["metal"] > 0 and self.army_positions[self.last_prov_centre] == 0:
+                    if abs(self.prov_center[0] - self.last_prov_centre[0]) <= 300 and abs(self.prov_center[1] - self.last_prov_centre[1]) <= 300:
+
+                        self.army_positions[self.prov_center] = 1
                         while self.last_prov_centre in self.army_positions:
-                            del self.army_positions[self.army_positions.index(self.last_prov_centre)]
-                        
+                            del self.army_positions[self.last_prov_centre]
+
                         data[self.country]["wheat"] -= 1
                         data[self.country]["metal"] -= 1
-    
+
                         with open(f"countries{self.year}.json", mode="w", encoding="utf-8") as file:
                             json.dump(data, file, ensure_ascii=False, indent=4)
+
+                        with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as country_file:
+                            country_data = json.load(country_file)
+
+                        for i in self.all_provinces:
+                            if i.name == self.prov_name:
+                                i.color = country_data[self.country]["color"]
+
+                elif not(data[self.country]["wheat"] > 0 and data[self.country]["metal"] > 0):
+                    choice = UILabel(text="Не хватает ресурсов!", text_color=(40, 40, 40), width=300)
+                    panel = UIBoxLayout(vertical=True, space_between=10)
+                    panel.with_padding(top=14, bottom=14, left=16, right=16)
+                    panel.with_background(color=(250, 250, 250, 230))
+                    panel.add(choice)
+                    self.moving_anchor = UIAnchorLayout()
+                    self.moving_anchor.add(
+                        panel,
+                        anchor_x="left",
+                        anchor_y="top",
+                        align_x=15,
+                        align_y=-650
+                    )
+                    self.manager.add(self.moving_anchor)
+
+                elif not(self.army_positions[self.last_prov_centre] == 0):
+                    choice = UILabel(text="Эта армия уже ходила!", text_color=(40, 40, 40), width=300)
+                    panel = UIBoxLayout(vertical=True, space_between=10)
+                    panel.with_padding(top=14, bottom=14, left=16, right=16)
+                    panel.with_background(color=(250, 250, 250, 230))
+                    panel.add(choice)
+                    self.moving_anchor = UIAnchorLayout()
+                    self.moving_anchor.add(
+                        panel,
+                        anchor_x="left",
+                        anchor_y="top",
+                        align_x=15,
+                        align_y=-650
+                    )
+                    self.manager.add(self.moving_anchor)
                 else:
-                    # choice = UILabel(text="Не хватает ресурсов!", text_color=(40, 40, 40), width=300)
-                    # panel = UIBoxLayout(vertical=True, space_between=10)
-                    # panel.with_padding(top=14, bottom=14, left=16, right=16)
-                    # panel.with_background(color=(250, 250, 250, 230))
-                    # panel.add(choice)
-                    # self.moving_anchor = UIAnchorLayout()
-                    # self.moving_anchor.add(
-                    #     panel,
-                    #     anchor_x="left",
-                    #     anchor_y="top",
-                    #     align_x=15,
-                    #     align_y=-650
-                    # )
-                    # self.manager.add(self.moving_anchor)
-                    pass
+                    print(data[self.country]["wheat"] > 0, data[self.country]["metal"] > 0, self.army_positions[self.last_prov_centre] == 0)
             self.moving = False
+
+    def close_help(self):
+        if self.moving_anchor is not None and self.manager:
+            self.manager.remove(self.moving_anchor)
+            self.moving_anchor = None
 
     def close_province_message(self):
         if self.province_panel is not None and self.manager:
@@ -563,27 +706,31 @@ class Game(arcade.View):
 
         for prov in self.all_provinces:
             if prov.collides_with_point((world_x, world_y)):
-                
+
                 self.last_prov_name = self.prov_name
                 self.last_prov_centre = self.prov_center
 
                 self.prov_name = prov.name
                 self.prov_resource = prov.resource
                 self.prov_center = (prov.center_x, prov.center_y)
-                
-                with open(f"countries{self.year}.json", "r", encoding="utf-8") as file:
-                    data = json.load(file)
 
-                    if prov.name in data[self.country]["provinces"] or self.prov_center in self.army_positions:
+                with open(f"countries{self.year}.json", "r", encoding="utf-8") as country_file:
+                    country_data = json.load(country_file)
+
+                    for i in self.all_provinces:
+                        if i.name == prov.name:
+                            prov_color = [i.color.r, i.color.g, i.color.b]
+                            break
+
+                    if prov_color == country_data[self.country]["color"]:
 
                         self.close_province_message()
-                        has_army = self.prov_center in self.army_positions
+                        has_army = self.prov_center in self.army_positions.keys()
                         self.show_province_panel(has_army)
 
                 if self.moving:
                     self.manager.remove(self.move_anchor)
                     self.moving_to()
-                    
 
                 return
 
