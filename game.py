@@ -1,7 +1,9 @@
 import arcade
 from arcade.gui import UIManager, UILabel, UIBoxLayout, UIMessageBox, UIFlatButton, UIAnchorLayout
+from arcade.particles import FadeParticle, Emitter, EmitBurst
 import json
 from collections import Counter
+import random
 
 import province
 import menu
@@ -76,6 +78,9 @@ class Game(arcade.View):
                     provinces_data[cap_key]["center_y"]
                 )
 
+        self.particle_emitters = []
+        self._init_particle_textures()
+
         self.overview()
     def overview(self):
         # with (open(f"provinces{self.year}.json", "r", encoding="utf-8") as provinces_file,
@@ -112,6 +117,86 @@ class Game(arcade.View):
             json.dump(province_data, f, ensure_ascii=False, indent=4)
             json.dump(countries_data, c, ensure_ascii=False, indent=4)
 
+    def _init_particle_textures(self):
+        self.victory_spark_textures = [
+            arcade.make_soft_circle_texture(10, arcade.color.GOLD),
+            arcade.make_soft_circle_texture(10, arcade.color.ORANGE_RED),
+            arcade.make_soft_circle_texture(10, arcade.color.DARK_ORANGE),
+            arcade.make_soft_circle_texture(10, arcade.color.SUNRAY),
+        ]
+        self.smoke_texture = arcade.make_soft_circle_texture(25, arcade.color.LIGHT_GRAY, 255, 80)
+        self.flash_texture = arcade.make_soft_circle_texture(15, arcade.color.WHITE, 255, 120)
+
+    def create_conquest_particles(self, x: float, y: float, conquering_color: tuple):
+        explosion = Emitter(
+            center_xy=(x, y),
+            emit_controller=EmitBurst(70),
+            particle_factory=lambda e: FadeParticle(
+                filename_or_texture=random.choice(self.victory_spark_textures),
+                change_xy=arcade.math.rand_in_circle((0.0, 0.0), 8.0),
+                lifetime=random.uniform(0.7, 1.3),
+                start_alpha=255,
+                end_alpha=0,
+                scale=random.uniform(0.4, 0.8),
+                mutation_callback=lambda p: (
+                    setattr(p, 'change_y', p.change_y - 0.08),
+                    setattr(p, 'change_x', p.change_x * 0.94),
+                    setattr(p, 'change_y', p.change_y * 0.94)
+                ),
+            ),
+        )
+
+        flash = Emitter(
+            center_xy=(x, y),
+            emit_controller=EmitBurst(15),
+            particle_factory=lambda e: FadeParticle(
+                filename_or_texture=self.flash_texture,
+                change_xy=(0, 0),
+                lifetime=0.3,
+                start_alpha=220,
+                end_alpha=0,
+                scale=random.uniform(1.2, 2.0),
+            ),
+        )
+
+        smoke = Emitter(
+            center_xy=(x, y),
+            emit_controller=EmitBurst(25),
+            particle_factory=lambda e: FadeParticle(
+                filename_or_texture=self.smoke_texture,
+                change_xy=(random.uniform(-0.8, 0.8), random.uniform(1.0, 2.5)),
+                lifetime=random.uniform(2.0, 3.0),
+                start_alpha=180,
+                end_alpha=0,
+                scale=random.uniform(0.6, 1.0),
+                mutation_callback=lambda p: (
+                    setattr(p, 'scale', p.scale),
+                    setattr(p, 'alpha', max(0, p.alpha - 2.0))
+                ),
+            ),
+        )
+
+        color_sparks = Emitter(
+            center_xy=(x, y),
+            emit_controller=EmitBurst(40),
+            particle_factory=lambda e: FadeParticle(
+                filename_or_texture=arcade.make_soft_circle_texture(
+                    8,
+                    (conquering_color[0], conquering_color[1], conquering_color[2])
+                ),
+                change_xy=arcade.math.rand_in_circle((0.0, 0.0), 6.0),
+                lifetime=random.uniform(0.9, 1.6),
+                start_alpha=240,
+                end_alpha=30,
+                scale=random.uniform(0.3, 0.6),
+                mutation_callback=lambda p: (
+                    setattr(p, 'change_y', p.change_y - 0.04),
+                    setattr(p, 'scale', p.scale)
+                ),
+            ),
+        )
+
+        self.particle_emitters.extend([explosion, flash, smoke, color_sparks])
 
     def on_show_view(self):
         arcade.set_background_color((42, 44, 44))
@@ -200,6 +285,22 @@ class Game(arcade.View):
         )
 
         self.manager.add(self.exit_button_container)
+
+        self.turn_label = UILabel(
+            text=f"Ход: {self.turn}",
+            font_size=18,
+            text_color=(220, 220, 220),
+            bold=True
+        )
+        turn_label_container = UIAnchorLayout()
+        turn_label_container.add(
+            self.turn_label,
+            anchor_x="right",
+            anchor_y="top",
+            align_x=-20,
+            align_y=-75
+        )
+        self.manager.add(turn_label_container)
 
     def show_province_panel(self, has_army: bool):
         self.province_panel_opened = True
@@ -472,18 +573,58 @@ class Game(arcade.View):
 
         panel.add(divider)
 
-        prov_title = UILabel("Провинции:", align="left")
-        panel.add(prov_title)
+        exit_button = UIFlatButton(
+            text="Выйти в меню",
+            width=240,
+            height=45
+        )
+        exit_button.on_click = lambda e: self.exit()
 
-        provinces = data["provinces"]
-        prov_text = ", ".join(provinces)
+        panel.add(country_label)
+        panel.add(turn_label)
+        panel.add(divider)
+        panel.add(exit_button)
 
-        prov_label = UILabel(
-            text=prov_text,
-            width=600,
+        anchor = UIAnchorLayout()
+        anchor.add(
+            panel,
+            anchor_x="center",
+            anchor_y="center"
+        )
+
+        self.manager.add(anchor)
+
+    def show_loser_window(self):
+        self.manager.clear()
+
+        with open(f"countries{self.year}.json", encoding="utf-8") as f:
+            data = json.load(f)[self.country]
+
+        panel = UIBoxLayout(vertical=True, space_between=12)
+        panel.with_padding(top=20, bottom=20, left=25, right=25)
+        panel.with_background(color=(25, 28, 32, 240))
+
+        title = UILabel(
+            text="ПОРАЖЕНИЕ",
+            font_size=28,
+            align="center",
+            text_color=(220, 220, 220)
+        )
+        panel.add(title)
+
+        country_label = UILabel(
+            text=f"Страна: {self.country}",
             align="left"
         )
-        panel.add(prov_label)
+
+        turn_label = UILabel(
+            text=f"Вы потратили слишком много времени: {self.turn}",
+            align="left"
+        )
+
+        divider = UILabel("─" * 36)
+
+        panel.add(divider)
 
         exit_button = UIFlatButton(
             text="Выйти в меню",
@@ -575,14 +716,20 @@ class Game(arcade.View):
             self.army_positions[i] = 0
 
         self.turn += 1
+
+        if hasattr(self, 'turn_label') and self.turn_label:
+            self.turn_label.text = f"Ход: {self.turn}"
+
         self.result = 0
         for i in self.all_provinces:
             if i.color.r == country_data[self.country]["color"][0] and \
                 i.color.g == country_data[self.country]["color"][1] and \
                 i.color.b == country_data[self.country]["color"][2]:
                 self.result += 1
-        if self.result == 150:
+        if self.result >= 150:
             self.show_victory_window()
+        elif self.turn == 50:
+            self.show_loser_window()
 
         self.close_help()
 
@@ -619,8 +766,10 @@ class Game(arcade.View):
         if self.prov_center not in self.army_positions.keys():
             with (open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file):
                 data = json.load(file)
-                if data[self.country]["wheat"] > 0 and data[self.country]["metal"] > 0 and self.army_positions[self.last_prov_centre] == 0:
-                    if abs(self.prov_center[0] - self.last_prov_centre[0]) <= 300 and abs(self.prov_center[1] - self.last_prov_centre[1]) <= 300:
+                if data[self.country]["wheat"] > 0 and data[self.country]["metal"] > 0 and self.army_positions[
+                    self.last_prov_centre] == 0:
+                    if abs(self.prov_center[0] - self.last_prov_centre[0]) <= 300 and abs(
+                            self.prov_center[1] - self.last_prov_centre[1]) <= 300:
 
                         self.army_positions[self.prov_center] = 1
                         while self.last_prov_centre in self.army_positions:
@@ -634,10 +783,14 @@ class Game(arcade.View):
 
                         with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as country_file:
                             country_data = json.load(country_file)
+                            conquering_color = country_data[self.country]["color"]
 
-                        for i in self.all_provinces:
-                            if i.name == self.prov_name:
-                                i.color = country_data[self.country]["color"]
+                            for i in self.all_provinces:
+                                if i.name == self.prov_name:
+                                    if i.color.r != conquering_color[0] or i.color.g != conquering_color[1] or i.color.b != conquering_color[2]:
+                                        i.color = conquering_color
+                                        self.create_conquest_particles(i.center_x, i.center_y, conquering_color)
+                                    break
 
                 elif not(data[self.country]["wheat"] > 0 and data[self.country]["metal"] > 0):
                     choice = UILabel(text="Не хватает ресурсов!", text_color=(40, 40, 40), width=300)
@@ -808,6 +961,15 @@ class Game(arcade.View):
         x, y = self.clamp_camera(x, y)
         self.world_camera.position = (x, y)
 
+        emitters_to_remove = []
+        for emitter in self.particle_emitters:
+            emitter.update(delta_time)
+            if emitter.can_reap():
+                emitters_to_remove.append(emitter)
+
+        for emitter in emitters_to_remove:
+            self.particle_emitters.remove(emitter)
+
     def on_draw(self):
         self.clear()
 
@@ -821,6 +983,9 @@ class Game(arcade.View):
             self.helmet_list = arcade.SpriteList()
             self.helmet_list.append(self.helmet)
             self.helmet_list.draw()
+
+        for emitter in self.particle_emitters:
+            emitter.draw()
 
         self.gui_camera.use()
         self.manager.draw()
