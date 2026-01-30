@@ -1,6 +1,7 @@
 import arcade
 from arcade.gui import UIManager, UIFlatButton, UIAnchorLayout, UIBoxLayout, UIImage
 import game
+from save_manager import has_save
 
 SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
@@ -156,6 +157,16 @@ class Menu(arcade.View):
             }
         }
 
+        if has_save():
+            bContinue = UIFlatButton(
+                text="> ПРОДОЛЖИТЬ ИГРУ",
+                width=520,
+                height=56,
+                style=style
+            )
+            bContinue.on_click = lambda e: self._load_saved_game()
+            self.box.add(bContinue)
+
         b1938 = UIFlatButton(
             text="> НАЧАТЬ КАМПАНИЮ 1938",
             width=520,
@@ -286,6 +297,18 @@ class Menu(arcade.View):
                     self.cloud = Cloud(SCREEN_HEIGHT // 7 * i, rev)
                     self.cloud_list.append(self.cloud)
 
+    def _load_saved_game(self):
+        from save_manager import load_game, apply_save_to_game
+        import game as game_module
+
+        save_data = load_game()
+        if not save_data:
+            return
+
+        g = game_module.Game(save_data["year"], save_data["country"], is_new_game=False)
+        g._pending_save_data = save_data
+        self.window.show_view(g)
+
 
 class CountrySelectionView(arcade.View):
 
@@ -334,7 +357,7 @@ class CountrySelectionView(arcade.View):
                 height=30,
                 style=style
             )
-            btn.on_click = lambda e, c=country: self.window.show_view(game.Game(self.year, c))
+            btn.on_click = lambda e, c=country: self.window.show_view(game.Game(self.year, c, is_new_game=True))
 
             country_block = UIBoxLayout(vertical=True, space_between=5)
             country_block.add(flag_widget)

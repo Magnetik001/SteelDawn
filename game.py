@@ -10,7 +10,7 @@ import menu
 
 
 class Game(arcade.View):
-    def __init__(self, year: int, country: str):
+    def __init__(self, year: int, country: str, is_new_game: bool = True):
         super().__init__()
 
         self.moving = False
@@ -80,8 +80,11 @@ class Game(arcade.View):
 
         self.particle_emitters = []
         self._init_particle_textures()
+        if is_new_game:
+            self.overview()
 
-        self.overview()
+        self._pending_save_data = None
+
     def overview(self):
         # with (open(f"provinces{self.year}.json", "r", encoding="utf-8") as provinces_file,
         #     open(f"countries{self.year}.json", "r", encoding="utf-8") as countries_file):
@@ -301,6 +304,11 @@ class Game(arcade.View):
             align_y=-75
         )
         self.manager.add(turn_label_container)
+
+        if self._pending_save_data is not None:
+            from save_manager import apply_save_to_game
+            apply_save_to_game(self, self._pending_save_data)
+            self._pending_save_data = None
 
     def show_province_panel(self, has_army: bool):
         self.province_panel_opened = True
@@ -648,6 +656,8 @@ class Game(arcade.View):
         self.manager.add(anchor)
 
     def exit(self):
+        from save_manager import save_game
+        save_game(self)
         self.window.show_view(menu.Menu())
 
     def level_up(self):
