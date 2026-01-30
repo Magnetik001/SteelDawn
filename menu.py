@@ -211,6 +211,25 @@ class Menu(arcade.View):
         self.manager.add(bExit)
         self.manager.add(bDonttouch)
 
+        bStats = UIFlatButton(
+            text="Статистика",
+            width=250,
+            height=75,
+            style=style
+        )
+        bStats.on_click = lambda e: self.window.show_view(StatisticsView())
+
+        stats_anchor = UIAnchorLayout()
+        stats_anchor.add(
+            bStats,
+            anchor_x="right",
+            anchor_y="bottom",
+            align_x=-10,
+            align_y=10
+        )
+        self.manager.add(stats_anchor)
+
+
     def animation(self):
         self.animation_ += 1
         if self.animation_ == 1:
@@ -399,4 +418,139 @@ class CountrySelectionView(arcade.View):
             font_name=("Courier New",),
             bold=True
         )
+        self.manager.draw()
+
+
+class StatisticsView(arcade.View):
+
+    def __init__(self):
+        super().__init__()
+        arcade.set_background_color(BG)
+        self.stats = None
+
+    def on_show_view(self):
+        from stats_manager import get_stats
+        self.stats = get_stats()
+        self.setup_gui()
+
+    def setup_gui(self):
+        self.manager = UIManager()
+        self.manager.enable()
+
+        style = {
+            "normal": {
+                "font_name": ("Courier New",),
+                "font_size": 26,
+                "font_color": DARK,
+                "bg": (0, 0, 0, 0),
+                "border": 0
+            },
+            "hover": {
+                "font_color": (0, 0, 0),
+                "bg": (220, 215, 205, 160)
+            },
+            "press": {
+                "font_color": (0, 0, 0),
+                "bg": (210, 205, 195, 180)
+            }
+        }
+
+        back_button = UIFlatButton(
+            text="Назад",
+            width=250,
+            height=75,
+            style=style
+        )
+        back_button.on_click = lambda e: self.window.show_view(Menu())
+
+        back_anchor = UIAnchorLayout()
+        back_anchor.add(
+            back_button,
+            anchor_x="right",
+            anchor_y="top",
+            align_x=-10,
+            align_y=-10
+        )
+        self.manager.add(back_anchor)
+
+    def on_hide_view(self):
+        self.manager.disable()
+
+    def on_draw(self):
+        self.clear()
+
+        arcade.draw_text(
+            "СТАТИСТИКА ИГРОКА",
+            self.window.width // 2,
+            self.window.height - 120,
+            DARK,
+            48,
+            anchor_x="center",
+            font_name=("Courier New",),
+            bold=True
+        )
+
+        arcade.draw_text(
+            "Накоплено за все сессии игры",
+            self.window.width // 2,
+            self.window.height - 180,
+            MID,
+            24,
+            anchor_x="center",
+            font_name=("Courier New",)
+        )
+
+        stats_y = self.window.height - 280
+        line_height = 60
+
+        arcade.draw_text(
+            f"Всего ходов: {self.stats['turns']}",
+            self.window.width // 2,
+            stats_y,
+            DARK,
+            36,
+            anchor_x="center",
+            font_name=("Courier New",)
+        )
+
+        arcade.draw_text(
+            f"Заказано подкреплений: {self.stats['reinforcements']}",
+            self.window.width // 2,
+            stats_y - line_height,
+            DARK,
+            36,
+            anchor_x="center",
+            font_name=("Courier New",)
+        )
+
+        arcade.draw_text(
+            f"Захвачено провинций: {self.stats['conquered']}",
+            self.window.width // 2,
+            stats_y - line_height * 2,
+            DARK,
+            36,
+            anchor_x="center",
+            font_name=("Courier New",)
+        )
+
+        arcade.draw_text(
+            f"Последнее обновление: {self.stats['last_update'] or 'никогда'}",
+            self.window.width // 2,
+            stats_y - line_height * 3 - 40,
+            (130, 130, 130),
+            20,
+            anchor_x="center",
+            font_name=("Courier New",),
+            italic=True
+        )
+
+        arcade.draw_lrbt_rectangle_outline(
+            left=self.window.width // 2 - 400,
+            right=self.window.width // 2 + 400,
+            top=self.window.height // 2 + 150,
+            bottom=self.window.height // 2 - 150,
+            color=(180, 180, 180),
+            border_width=1
+        )
+
         self.manager.draw()

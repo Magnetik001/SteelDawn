@@ -4,9 +4,9 @@ from arcade.particles import FadeParticle, Emitter, EmitBurst
 import json
 from collections import Counter
 import random
-
 import province
 import menu
+import stats_manager
 
 
 class Game(arcade.View):
@@ -691,6 +691,7 @@ class Game(arcade.View):
             self.show_province_panel(has_army)
 
     def new_turn(self):
+        stats_manager.increment_turns(1)
         with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as country_file,\
             open(f"provinces{self.year}.json", mode="r", encoding="utf-8") as provinces_file:
             country_data = json.load(country_file)
@@ -748,6 +749,7 @@ class Game(arcade.View):
             with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file:
                 data = json.load(file)
                 if data[self.country]["wheat"] - 1 >= 0 and data[self.country]["metal"] - 1 >= 0:
+                    stats_manager.increment_reinforcements(1)
                     self.army_positions[self.prov_center] = 0
                     data[self.country]["wheat"] -= 1
                     data[self.country]["metal"] -= 1
@@ -797,9 +799,11 @@ class Game(arcade.View):
 
                             for i in self.all_provinces:
                                 if i.name == self.prov_name:
-                                    if i.color.r != conquering_color[0] or i.color.g != conquering_color[1] or i.color.b != conquering_color[2]:
+                                    if i.color.r != conquering_color[0] or i.color.g != conquering_color[
+                                        1] or i.color.b != conquering_color[2]:
                                         i.color = conquering_color
                                         self.create_conquest_particles(i.center_x, i.center_y, conquering_color)
+                                        stats_manager.increment_conquered(1)
                                     break
 
                 elif not(data[self.country]["wheat"] > 0 and data[self.country]["metal"] > 0):

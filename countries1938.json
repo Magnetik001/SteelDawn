@@ -1080,11 +1080,11 @@
             "мурманск"
         ],
         "capital": "Москва",
-        "wheat": 0,
-        "metal": 0,
-        "wood": 0,
-        "coal": 0,
-        "oil": 0
+        "wheat": 28,
+        "metal": 68,
+        "wood": 42,
+        "coal": 18,
+        "oil": 2
     },
     "Эстония": {
         "color": [
