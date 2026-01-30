@@ -13,11 +13,6 @@ class Game(arcade.View):
     def __init__(self, year: int, country: str, is_new_game: bool = True):
         super().__init__()
 
-        self.moving = False
-        self.prov_center = ""
-        self.moving_army = False
-        self.prov_name = ""
-
         self.year = year
         self.country = country
 
@@ -64,6 +59,11 @@ class Game(arcade.View):
 
         self.world_camera = arcade.camera.Camera2D()
         self.gui_camera = arcade.camera.Camera2D()
+
+        self.moving = False
+        self.prov_center = ""
+        self.moving_army = False
+        self.prov_name = ""
 
         with open(f"provinces{self.year}.json", "r", encoding="utf-8") as provinces_file, \
              open(f"countries{self.year}.json", "r", encoding="utf-8") as countries_file:
@@ -744,36 +744,6 @@ class Game(arcade.View):
 
         self.close_help()
 
-    def buy_army(self):
-        if self.prov_center not in self.army_positions.keys():
-            with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file:
-                data = json.load(file)
-                if data[self.country]["wheat"] - 1 >= 0 and data[self.country]["metal"] - 1 >= 0:
-                    stats_manager.increment_reinforcements(1)
-                    self.army_positions[self.prov_center] = 0
-                    data[self.country]["wheat"] -= 1
-                    data[self.country]["metal"] -= 1
-
-                    with open(f"countries{self.year}.json", mode="w", encoding="utf-8") as file:
-                        json.dump(data, file, ensure_ascii=False, indent=4)
-
-    def move_army(self):
-        self.moving = True
-        choice = UILabel(text="Выберите провинцию", text_color=(40, 40, 40), width=300)
-        panel = UIBoxLayout(vertical=True, space_between=10)
-        panel.with_padding(top=14, bottom=14, left=16, right=16)
-        panel.with_background(color=(250, 250, 250, 230))
-        panel.add(choice)
-        self.move_anchor = UIAnchorLayout()
-        self.move_anchor.add(
-            panel,
-            anchor_x="left",
-            anchor_y="top",
-            align_x=15,
-            align_y=-450
-        )
-        self.manager.add(self.move_anchor)
-
     def moving_to(self):
         if self.prov_center not in self.army_positions.keys():
             with (open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file):
@@ -841,6 +811,36 @@ class Game(arcade.View):
                     print(data[self.country]["wheat"] > 0, data[self.country]["metal"] > 0, self.army_positions[self.last_prov_centre] == 0)
             self.moving = False
 
+    def buy_army(self):
+        if self.prov_center not in self.army_positions.keys():
+            with open(f"countries{self.year}.json", mode="r", encoding="utf-8") as file:
+                data = json.load(file)
+                if data[self.country]["wheat"] - 1 >= 0 and data[self.country]["metal"] - 1 >= 0:
+                    stats_manager.increment_reinforcements(1)
+                    self.army_positions[self.prov_center] = 0
+                    data[self.country]["wheat"] -= 1
+                    data[self.country]["metal"] -= 1
+
+                    with open(f"countries{self.year}.json", mode="w", encoding="utf-8") as file:
+                        json.dump(data, file, ensure_ascii=False, indent=4)
+
+    def move_army(self):
+        choice = UILabel(text="Выберите провинцию", text_color=(40, 40, 40), width=300)
+        panel = UIBoxLayout(vertical=True, space_between=10)
+        panel.with_padding(top=14, bottom=14, left=16, right=16)
+        panel.with_background(color=(250, 250, 250, 230))
+        panel.add(choice)
+        self.move_anchor = UIAnchorLayout()
+        self.move_anchor.add(
+            panel,
+            anchor_x="left",
+            anchor_y="top",
+            align_x=15,
+            align_y=-450
+        )
+        self.manager.add(self.move_anchor)
+        self.moving = True
+
     def close_help(self):
         if self.moving_anchor is not None and self.manager:
             self.manager.remove(self.moving_anchor)
@@ -874,12 +874,12 @@ class Game(arcade.View):
         for prov in self.all_provinces:
             if prov.collides_with_point((world_x, world_y)):
 
-                self.last_prov_name = self.prov_name
-                self.last_prov_centre = self.prov_center
-
                 self.prov_name = prov.name
                 self.prov_resource = prov.resource
                 self.prov_center = (prov.center_x, prov.center_y)
+
+                self.last_prov_name = self.prov_name
+                self.last_prov_centre = self.prov_center
 
                 with open(f"countries{self.year}.json", "r", encoding="utf-8") as country_file:
                     country_data = json.load(country_file)
@@ -989,6 +989,10 @@ class Game(arcade.View):
 
         self.world_camera.use()
         self.background.draw()
+
+        for emitter in self.particle_emitters:
+            emitter.draw()
+
         self.all_provinces.draw()
         for pos in self.army_positions:
             self.helmet = arcade.Sprite("images/шлем зеленый 3.png", scale=2)
@@ -997,9 +1001,6 @@ class Game(arcade.View):
             self.helmet_list = arcade.SpriteList()
             self.helmet_list.append(self.helmet)
             self.helmet_list.draw()
-
-        for emitter in self.particle_emitters:
-            emitter.draw()
 
         self.gui_camera.use()
         self.manager.draw()
