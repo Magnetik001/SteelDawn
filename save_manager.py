@@ -1,4 +1,3 @@
-# save_manager.py
 import json
 import os
 
@@ -41,19 +40,13 @@ def save_game(game):
     with open(SAVE_FILE, "w", encoding="utf-8") as f:
         json.dump(save_data, f, ensure_ascii=False, indent=2)
 
-    print(f"[SAVE] Игра сохранена: ход {game.turn}, страна {game.country}")
-
 
 def load_game():
     if not os.path.exists(SAVE_FILE):
         return None
 
-    try:
-        with open(SAVE_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        print(f"[LOAD ERROR] {e}")
-        return None
+    with open(SAVE_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
 def has_save():
