@@ -289,6 +289,11 @@ class Game(arcade.View):
 
         self.manager.add(self.exit_button_container)
 
+        if self._pending_save_data is not None:
+            from save_manager import apply_save_to_game
+            apply_save_to_game(self, self._pending_save_data)
+            self._pending_save_data = None
+
         self.turn_label = UILabel(
             text=f"Ход: {self.turn}",
             font_size=18,
@@ -304,11 +309,6 @@ class Game(arcade.View):
             align_y=-75
         )
         self.manager.add(turn_label_container)
-
-        if self._pending_save_data is not None:
-            from save_manager import apply_save_to_game
-            apply_save_to_game(self, self._pending_save_data)
-            self._pending_save_data = None
 
     def show_province_panel(self, has_army: bool):
         self.province_panel_opened = True

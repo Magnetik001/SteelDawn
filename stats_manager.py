@@ -40,13 +40,8 @@ def save_stats(stats):
 Статистика накапливается между всеми сессиями игры.
 """
 
-    try:
-        with open(STATS_FILE, "w", encoding="utf-8") as f:
-            f.write(content)
-        print(
-            f"[STATS] Сохранена статистика: ходы={stats['turns']}, подкрепления={stats['reinforcements']}, провинции={stats['conquered']}")
-    except Exception as e:
-        print(f"[STATS SAVE ERROR] {e}")
+    with open(STATS_FILE, "w", encoding="utf-8") as f:
+        f.write(content)
 
 
 def increment_turns(n=1):

@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="сохраниние прогресса">
-      <change afterPath="$PROJECT_DIR$/stats_manager.py" afterDir="false" />
+    <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="статистика">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/countries1938.json" beforeDir="false" afterPath="$PROJECT_DIR$/countries1938.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/provinces1938.json" beforeDir="false" afterPath="$PROJECT_DIR$/provinces1938.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/savegame.json" beforeDir="false" afterPath="$PROJECT_DIR$/savegame.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/save_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/save_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stats_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/stats_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/water-background_87394-3060 (1).jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +209,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769751398042</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="статистика">
+      <option name="closed" value="true" />
+      <created>1769754807478</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1769754807478</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -232,6 +239,7 @@
     <MESSAGE value="тест нового коммита" />
     <MESSAGE value="тест нового коммита 2" />
     <MESSAGE value="сохраниние прогресса" />
-    <option name="LAST_COMMIT_MESSAGE" value="сохраниние прогресса" />
+    <MESSAGE value="статистика" />
+    <option name="LAST_COMMIT_MESSAGE" value="статистика" />
   </component>
 </project>
