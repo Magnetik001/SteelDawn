@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="статистика">
+    <list default="true" id="b8a4a796-aaed-4306-93ad-ca4ad353165a" name="Changes" comment="не сохранялся текущий ход">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/countries1938.json" beforeDir="false" afterPath="$PROJECT_DIR$/countries1938.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/save_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/save_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stats_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/stats_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/water-background_87394-3060 (1).jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/provinces1938.json" beforeDir="false" afterPath="$PROJECT_DIR$/provinces1938.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +30,12 @@
     &quot;assignee&quot;: &quot;Magnetik001&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Magnetik001/SteelDawn.git",
-    "accountId": "e01e531f-539d-436e-978c-30a88d1f52b3"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Magnetik001/SteelDawn.git&quot;,
+    &quot;accountId&quot;: &quot;e01e531f-539d-436e-978c-30a88d1f52b3&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -217,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769754807478</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="не сохранялся текущий ход">
+      <option name="closed" value="true" />
+      <created>1769785934852</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1769785934852</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -240,6 +244,7 @@
     <MESSAGE value="тест нового коммита 2" />
     <MESSAGE value="сохраниние прогресса" />
     <MESSAGE value="статистика" />
-    <option name="LAST_COMMIT_MESSAGE" value="статистика" />
+    <MESSAGE value="не сохранялся текущий ход" />
+    <option name="LAST_COMMIT_MESSAGE" value="не сохранялся текущий ход" />
   </component>
 </project>

@@ -2013,16 +2013,49 @@
         "level": 1
     },
     "таллин": {
-        "center_x": 3424.5,
-        "center_y": 3422.5,
-        "color": [
-            134,
-            30,
-            30
-        ],
-        "resource": "-",
-        "level": 1
-    },
+    "center_x": 3358.5,
+    "center_y": 3421.5,
+    "color": [
+      134,
+      30,
+      30
+    ],
+    "resource": "пшеница",
+    "level": 1
+  },
+  "нарва": {
+    "center_x": 3455.5,
+    "center_y": 3469.5,
+    "color": [
+      134,
+      30,
+      30
+    ],
+    "resource": "-",
+    "level": 1
+  },
+  "тарту": {
+    "center_x": 3476.0,
+    "center_y": 3402.5,
+    "color": [
+      134,
+      30,
+      30
+    ],
+    "resource": "железо",
+    "level": 1
+  },
+  "тори": {
+    "center_x": 3397.5,
+    "center_y": 3359.5,
+    "color": [
+      134,
+      30,
+      30
+    ],
+    "resource": "-",
+    "level": 1
+  },
     "любляна": {
         "center_x": 2609.0,
         "center_y": 1867.0,
