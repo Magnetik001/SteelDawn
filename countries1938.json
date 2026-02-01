@@ -363,11 +363,11 @@
             "щецин"
         ],
         "capital": "Берлин",
-        "wheat": 0,
-        "metal": 0,
-        "wood": 0,
-        "coal": 0,
-        "oil": 0
+        "wheat": 2,
+        "metal": 3,
+        "wood": 2,
+        "coal": 1,
+        "oil": 1
     },
     "Швейцария": {
         "color": [
@@ -551,21 +551,6 @@
             "ужгород"
         ],
         "capital": "Прага",
-        "wheat": 0,
-        "metal": 0,
-        "wood": 0,
-        "coal": 0,
-        "oil": 0
-    },
-    "Словакия": {
-        "color": [
-            79,
-            119,
-            207
-        ],
-        "resources": [],
-        "provinces": [],
-        "capital": "Братислава",
         "wheat": 0,
         "metal": 0,
         "wood": 0,
@@ -763,21 +748,6 @@
             "крит"
         ],
         "capital": "Афины",
-        "wheat": 0,
-        "metal": 0,
-        "wood": 0,
-        "coal": 0,
-        "oil": 0
-    },
-    "Хорватия": {
-        "color": [
-            45,
-            59,
-            110
-        ],
-        "resources": [],
-        "provinces": [],
-        "capital": "Загреб",
         "wheat": 0,
         "metal": 0,
         "wood": 0,
@@ -1080,20 +1050,30 @@
             "мурманск"
         ],
         "capital": "Москва",
-        "wheat": 28,
-        "metal": 68,
-        "wood": 42,
-        "coal": 18,
-        "oil": 2
+        "wheat": 0,
+        "metal": 0,
+        "wood": 0,
+        "coal": 0,
+        "oil": 0
     },
     "Эстония": {
         "color": [
-            101,
+            0,
             133,
-            146
+            224
         ],
-        "resources": [],
-        "provinces": [],
+        "resources": [
+            "Пшеница",
+            "-",
+            "Пшеница",
+            "Металл"
+        ],
+        "provinces": [
+            "таллин",
+            "нарва",
+            "тори",
+            "тарту"
+        ],
         "capital": "Таллин",
         "wheat": 0,
         "metal": 0,

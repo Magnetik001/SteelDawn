@@ -8,8 +8,8 @@ import menu
 class MainWindow(arcade.Window):
     def __init__(self):
         screen_width, screen_height = arcade.get_display_size()
-
         super().__init__(screen_width, screen_height, "Steel Dawn", fullscreen=True)
+
         self.player = None
         self.music_files = [
             "Andreas_Waldetoft_-_Morning_Of_D_Day_72081712",
